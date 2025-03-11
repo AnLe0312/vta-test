@@ -1,6 +1,6 @@
 # ETL Structure
 ```
-project-root/
+etl/
 │── config/                     # Configuration files
 │   ├── gcs_service_key.json    # GCS service account key
 │   ├── config.yaml             # General config (e.g., GCS bucket name, file paths)
