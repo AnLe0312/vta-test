@@ -1,0 +1,12 @@
+
+gcs:
+  bucket_name: "data-lake-vta-test"
+  files:
+    retailtransactiontable: "raw/RETAILTRANSACTIONTABLE.parquet"
+    retailtransactiondiscounttrans: "raw/RETAILTRANSACTIONDISCOUNTTR.parquet"
+    retailtransactionpaymenttrans: "raw/RETAILTRANSACTIONPAYMENTTRANS.parquet"
+    retailtendertypetable: "raw/RETAILTENDERTYPETABLE.parquet"
+    salesline: "raw/SALESLINE.parquet"
+    custtable: "raw/CUSTTABLE.parquet"
+    custinvoicejour: "raw/CUSTINVOICEJOUR.parquet"
+    inventtrans: "raw/INVENTTRANS.parquet"

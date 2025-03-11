@@ -1,0 +1,55 @@
+clickhouse:
+  host: "localhost"
+  user: "default"
+  password: "password"
+  databases:
+    prod_source:  
+      name: "prod_source"
+      tables:
+        retailtransaction:
+          table_name: "retailtransaction"
+          engine: "MergeTree"
+          order_by: "transaction_id"
+          primary_key: "transaction_id"
+          columns:
+            - name: "transaction_id"
+              type: "UInt64"
+            - name: "customer_id"
+              type: "UInt64"
+            - name: "amount"
+              type: "Float64"
+            - name: "transaction_date"
+              type: "DateTime"
+
+        custtransjour:
+          table_name: "custtransjour"
+          engine: "MergeTree"
+          order_by: "journey_id"
+          primary_key: "journey_id"
+          columns:
+            - name: "journey_id"
+              type: "UInt64"
+            - name: "customer_id"
+              type: "UInt64"
+            - name: "journey_start"
+              type: "DateTime"
+            - name: "journey_end"
+              type: "DateTime"
+
+    prod_dw: 
+      name: "prod_dw"
+      tables:
+        inventory:
+          table_name: "inventory"
+          engine: "MergeTree"
+          order_by: "item_id"
+          primary_key: "item_id"
+          columns:
+            - name: "item_id"
+              type: "UInt64"
+            - name: "product_name"
+              type: "String"
+            - name: "quantity"
+              type: "Int32"
+            - name: "last_updated"
+              type: "DateTime"

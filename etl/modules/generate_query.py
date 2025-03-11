@@ -30,7 +30,6 @@ def generate_query(query_type, schema, table, condition=None, data=None):
     primary_key_col = column_names[0]  # Assume first column is primary key
 
     col_names_str = ", ".join([f"`{col}`" for col in column_names])
-    update_columns = ", ".join([f"`{col}` = new.`{col}`" for col in column_names])
 
     try:
         # Check for duplicates
@@ -44,7 +43,7 @@ def generate_query(query_type, schema, table, condition=None, data=None):
 
         if duplicates:
             date = datetime.now().strftime("%Y_%m_%d")
-            log_filename = f'logs/duplicate_log/{table}_{date}.log'
+            log_filename = f'logs/duplicate_log/dup_{table}_{date}.log'
             logging.basicConfig(filename=log_filename, level=logging.INFO, format='%(asctime)s - %(message)s')
 
             for dup in duplicates:
@@ -76,7 +75,7 @@ def generate_query(query_type, schema, table, condition=None, data=None):
 
     except Exception as e:
         date = datetime.now().strftime("%Y_%m_%d")
-        log_filename = f'logs/error_log/error_{date}.log'
+        log_filename = f'logs/error_log/error_{table}_{date}.log'
         logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(asctime)s - %(message)s')
         logging.error(str(e))
         raise Exception("Error generating query")
