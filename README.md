@@ -23,15 +23,24 @@
 │   │   ├── ad-hoc_queries.sql
 │
 │── 📂 etl/                       # ETL (Extract, Transform, Load) scripts
-│   ├── 📜 extract/               # Extract data from GCS
-│   │   ├── extract_from_gcs.py
+│   │── 📜 config/
+│   │   ├── gcs_service_key.json  # (ignored in .gitignore)
+│   │   ├── config.yaml  # Configuration file
 │   │
-│   ├── 📜 transform/             # Data transformation logic
-│   │   ├── clean_data.py
-│   │   ├── aggregate_data.py
+│   │── 📜 modules/
+│   │   ├── db_connector.py  # ClickHouse connection logic
+│   │   ├── gcs_handler.py  # Read files from GCS
 │   │
-│   ├── 📜 load/                  # Load data into ClickHouse
-│   │   ├── load_to_clickhouse.py
+│   │── 📜 scripts/
+│   │   ├── retailtransaction.py  # Process retail transactions
+│   │   ├── custtransjour.py  # Process customer transactions
+│   │   ├── inventory.py  # Process inventory data
+│   │
+│   │── 📜 logs/
+│   │   ├── process.log  # Log file
+│   │
+│   │── requirements.txt  # Python dependencies
+│   │── .gitignore  # Ignore sensitive files
 │
 │── 📂 prefect/                   # Apache Prefect DAGs for automation
 │   ├── gcs_to_clickhouse_dag.py
