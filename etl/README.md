@@ -1,4 +1,4 @@
-# Project Structure
+# ETL Structure
 ```
 project-root/
 │── config/                     # Configuration files
