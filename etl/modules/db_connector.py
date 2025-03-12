@@ -11,7 +11,7 @@ sys.path.append(parent_path)
 # Ensure no proxy interferes with the connection
 os.environ["NO_PROXY"] = "mijcgdzo2n.us-central1.gcp.clickhouse.cloud"
 
-def get_clickhouse_connection(database_name=None):
+def get_clickhouse_connection(database_name):
     try:
         # Load config
         with open(f'{parent_path}/config/clickhouse_config.yaml', "r") as f:

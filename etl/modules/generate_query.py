@@ -26,7 +26,8 @@ def generate_query(query_type, database_name, table, condition=None, data=None):
 
     # Get column names dynamically
     describe_query = f"DESCRIBE TABLE {database_name}.{table}"
-    column_names = [col[0] for col in client.execute(describe_query)]
+    query_result = client.query(describe_query)
+    column_names = [col[0] for col in query_result.result_rows]
 
     if not column_names:
         raise ValueError(f"Table {database_name}.{table} has no columns.")
@@ -44,7 +45,7 @@ def generate_query(query_type, database_name, table, condition=None, data=None):
             insert_query = f"""
             INSERT INTO {database_name}.{table} ({col_names_str}) VALUES {data};
             """
-            client.execute(insert_query)
+            client.query(insert_query)
 
             # Check for duplicates immediately after INSERT
             duplicate_check_query = f"""
@@ -57,7 +58,7 @@ def generate_query(query_type, database_name, table, condition=None, data=None):
                 HAVING COUNT(*) > 1
             )
             """
-            duplicates = client.execute(duplicate_check_query)
+            duplicates = client.query(duplicate_check_query)
 
             # Log duplicates if any are found
             if duplicates:
@@ -72,7 +73,7 @@ def generate_query(query_type, database_name, table, condition=None, data=None):
 
             # Run OPTIMIZE TABLE to clean up duplicates if possible
             optimize_query = f"OPTIMIZE TABLE {database_name}.{table} FINAL;"
-            client.execute(optimize_query)
+            client.query(optimize_query)
 
         # Generate DELETE query
         elif query_type == 'DELETE':
@@ -81,11 +82,11 @@ def generate_query(query_type, database_name, table, condition=None, data=None):
             delete_query = f"""
             ALTER TABLE {database_name}.{table} DELETE WHERE {condition};
             """
-            client.execute(delete_query)
+            client.query(delete_query)
 
             # Run OPTIMIZE after DELETE too
             optimize_query = f"OPTIMIZE TABLE {database_name}.{table} FINAL;"
-            client.execute(optimize_query)
+            client.query(optimize_query)
 
         else:
             raise ValueError("Invalid query type. Choose from 'INSERT' or 'DELETE'.")

@@ -1,15 +1,24 @@
 import pandas as pd
+import numpy as np
 import logging
 import re
+import os
+import sys 
+
+current_path = os.path.dirname(os.path.realpath(__file__))
+parent_path = os.path.dirname(current_path)
+sys.path.append(parent_path)
+
 from modules.db_connector import get_clickhouse_connection
 
 # Fetch ClickHouse table schema
 def fetch_table_schema(database_name, table_name):
     client = get_clickhouse_connection(database_name)
     query = f"DESCRIBE TABLE {database_name}.{table_name}"
-    schema = client.execute(query)
+    schema = client.query(query)
+    schema_data = schema.result_rows
 
-    return {col[0]: {"type": col[1], "nullable": "Nullable" in col[1]} for col in schema}
+    return {col[0]: {"type": col[1], "nullable": "Nullable" in col[1]} for col in schema_data}
 
 
 # Validate DataFrame against schema
@@ -51,7 +60,7 @@ def transform_dataframe_to_schema(df, schema):
         # Handle missing columns by adding defaults or nulls
         if col not in df.columns:
             logging.warning(f"Column {col} missing in data. Filling with None")
-            df[col] = None if nullable else 0
+            df[col] = np.nan if nullable else 0
 
         # Transform columns to match schema types
         if dtype == "String":

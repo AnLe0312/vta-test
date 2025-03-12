@@ -8,7 +8,7 @@ sys.path.append(parent_path)
 from modules.db_connector import get_clickhouse_connection
 from modules.gcs_handler import read_gcs_file
 from modules.generate_query import generate_query
-from modules.schema_handler import fetch_table_schema, prepare_data_for_load
+from modules.schema_handler import fetch_table_schema, prepare_data_for_load, transform_dataframe_to_schema
 import yaml
 import logging
 import sys
@@ -43,13 +43,13 @@ def load_data_into_clickhouse(database_name, table_name, df, job_id, job_name):
     schema = fetch_table_schema(database_name, table_name)
 
     # Validate and transform data
-    df_prepared = prepare_data_for_load(df, schema)
+    df_prepared = transform_dataframe_to_schema(df, schema)
 
     # Generate the INSERT query dynamically
     query = generate_query(query_type="INSERT", database_name=database_name, table=table_name, data=df_prepared)
 
     try:
-        client.execute(query)
+        client.query(query)
         log_job(job_id, job_name, "SUCCESS", len(df), datetime.now().isoformat())
     except Exception as e:
         log_job(job_id, job_name, f"FAILED: {str(e)}", len(df))
