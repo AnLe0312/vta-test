@@ -1,55 +1,23 @@
 clickhouse:
-  host: "localhost"
+  host: "ofvssfn5dd.us-central1.gcp.clickhouse.cloud"
+  port: 8443
   user: "default"
-  password: "password"
+  password: "upU57JMLE.d30"
   databases:
     prod_source:  
       name: "prod_source"
       tables:
-        retailtransaction:
-          table_name: "retailtransaction"
-          engine: "MergeTree"
-          order_by: "transaction_id"
-          primary_key: "transaction_id"
-          columns:
-            - name: "transaction_id"
-              type: "UInt64"
-            - name: "customer_id"
-              type: "UInt64"
-            - name: "amount"
-              type: "Float64"
-            - name: "transaction_date"
-              type: "DateTime"
+        salesline:
+          table_name: "salesline"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "CREATEDDATETIME"]
+          primary_key: "RECID"
 
-        custtransjour:
-          table_name: "custtransjour"
-          engine: "MergeTree"
-          order_by: "journey_id"
-          primary_key: "journey_id"
-          columns:
-            - name: "journey_id"
-              type: "UInt64"
-            - name: "customer_id"
-              type: "UInt64"
-            - name: "journey_start"
-              type: "DateTime"
-            - name: "journey_end"
-              type: "DateTime"
+        custinvoicejour:
+          table_name: "custinvoicejour"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "INVOICEDATE"]
+          primary_key: "RECID"
 
-    prod_dw: 
+    prod_dwh: 
       name: "prod_dw"
-      tables:
-        inventory:
-          table_name: "inventory"
-          engine: "MergeTree"
-          order_by: "item_id"
-          primary_key: "item_id"
-          columns:
-            - name: "item_id"
-              type: "UInt64"
-            - name: "product_name"
-              type: "String"
-            - name: "quantity"
-              type: "Int32"
-            - name: "last_updated"
-              type: "DateTime"

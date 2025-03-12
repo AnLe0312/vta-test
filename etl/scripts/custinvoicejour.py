@@ -36,7 +36,7 @@ def load_data_into_clickhouse(schema, table_name, df, job_id, job_name):
     """
     Load data into ClickHouse using dynamically generated queries.
     """
-    client = get_clickhouse_connection()
+    client = get_clickhouse_connection("prod_source")
 
     # Convert DataFrame rows to tuples
     values = [tuple(x) for x in df.to_numpy()]
@@ -59,7 +59,7 @@ def main(file_key, schema, table_name):
     job_name = file_key
 
     # Load configuration
-    with open(f'{parent_path}/config/config.yaml', "r") as f:
+    with open(f'{parent_path}/config/storage_config.yaml', "r") as f:
         config = yaml.safe_load(f)
 
     bucket_name = config["gcs"]["bucket_name"]
