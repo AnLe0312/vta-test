@@ -8,6 +8,7 @@ sys.path.append(parent_path)
 from modules.db_connector import get_clickhouse_connection
 from modules.gcs_handler import read_gcs_file
 from modules.generate_query import generate_query
+from modules.schema_handler import fetch_table_schema, prepare_data_for_load
 import yaml
 import logging
 import sys
@@ -32,17 +33,20 @@ def log_job(job_id, job_name, job_status, total_records, last_success=None):
     }
     logging.info(log_entry)
 
-def load_data_into_clickhouse(schema, table_name, df, job_id, job_name):
+def load_data_into_clickhouse(database_name, table_name, df, job_id, job_name):
     """
     Load data into ClickHouse using dynamically generated queries.
     """
-    client = get_clickhouse_connection("prod_source")
+    client = get_clickhouse_connection(database_name)
 
-    # Convert DataFrame rows to tuples
-    values = [tuple(x) for x in df.to_numpy()]
+    # Fetch schema from ClickHouse
+    schema = fetch_table_schema(database_name, table_name)
+
+    # Validate and transform data
+    df_prepared = prepare_data_for_load(df, schema)
 
     # Generate the INSERT query dynamically
-    query = generate_query(query_type="INSERT", schema=schema, table=table_name, data=str(values))
+    query = generate_query(query_type="INSERT", database_name=database_name, table=table_name, data=df_prepared)
 
     try:
         client.execute(query)
@@ -51,7 +55,7 @@ def load_data_into_clickhouse(schema, table_name, df, job_id, job_name):
         log_job(job_id, job_name, f"FAILED: {str(e)}", len(df))
         logging.error(f"Job {job_id} failed: {e}")
 
-def main(file_key, schema, table_name):
+def main(file_key, database_name, table_name):
     """
     Main function to extract, transform, and load data from GCS to ClickHouse.
     """
@@ -75,10 +79,10 @@ def main(file_key, schema, table_name):
     df = read_gcs_file(bucket_name, file_path)
 
     # Load into ClickHouse
-    load_data_into_clickhouse(schema, table_name, df, job_id, job_name)
+    load_data_into_clickhouse(database_name, table_name, df, job_id, job_name)
 
 if __name__ == "__main__":
-    file_key = sys.argv[1]  
-    schema = "my_database"  
-    table_name = sys.argv[2] 
-    main(file_key, schema, table_name)
+    file_key = "custinvoicejour" 
+    database_name = "prod_source"  
+    table_name = "custinvoicejour"
+    main(file_key, database_name, table_name)
