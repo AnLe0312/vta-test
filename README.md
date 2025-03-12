@@ -10,7 +10,6 @@
 │   ├── 📜 ddl/                   # DDL (schema & table creation)
 │   │   ├── create_tables.sql
 │   │   ├── create_views.sql
-│   │   ├── create_partitions.sql
 │   │
 │   ├── 📜 dml/                   # DML (data operations)
 │   │   ├── insert_data.sql
@@ -30,7 +29,7 @@
 │
 │── 📂 prefect/                   # Apache Prefect DAGs for automation
 │   ├── gcs_to_clickhouse_dag.py
-│   ├── clickhouse_cleanup_dag.py
+│   ├── clickhouse_dwh_dag.py
 │
 │── 📂 scripts/                   # Utility scripts for automation
 │   ├── setup_env.sh              # Shell script to set up environment
