@@ -1,6 +1,6 @@
 # Project Structure
 ```
-📦 VTA-TEST
+📦 VTA-CRM
 │── 📂 data-lake/                # Raw data stored in GCS
 │   ├── 📂 raw/                   # Unprocessed data
 │   ├── 📂 processed/             # Processed and cleaned data
