@@ -1,0 +1,8 @@
+clickhouse-connect
+google-cloud-storage
+psutil
+pyyaml
+pandas
+numpy
+pytz
+requests
