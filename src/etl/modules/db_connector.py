@@ -5,16 +5,13 @@ import clickhouse_connect
 
 # Set up paths
 current_path = os.path.dirname(os.path.realpath(__file__))
-parent_path = os.path.dirname(current_path)
+parent_path = os.path.dirname(os.path.dirname(os.path.dirname(current_path)))
 sys.path.append(parent_path)
-
-# Ensure no proxy interferes with the connection
-os.environ["NO_PROXY"] = "mijcgdzo2n.us-central1.gcp.clickhouse.cloud"
 
 def get_clickhouse_connection(database_name):
     try:
         # Load config
-        with open(f'{parent_path}/config/clickhouse_config.yaml', "r") as f:
+        with open(f'{parent_path}/config/clickhouse_credentials.yaml', "r") as f:
             config = yaml.safe_load(f)
         
         # Use the provided database_name or fallback to config file

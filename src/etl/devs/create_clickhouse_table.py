@@ -21,7 +21,7 @@ def clean_sql(sql_content):
 
 def create_tables_from_sql_folder(sql_folder_path):
     """Reads all .sql files from a folder and creates tables in ClickHouse."""
-    client = get_clickhouse_connection()
+    client = get_clickhouse_connection("prod_source")
     if not client:
         print("Failed to connect to ClickHouse.")
         return

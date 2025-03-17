@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "windy-forge-404504",
+  "private_key_id": "561a7eeea3b11975558fd3584bf469bf4fac6a51",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDDvndmkLbx/Ejc\nq391n2UD/gnAaTauN4yDsoynypdGP4MR5tt7JNZTj7QWOmAnqLVAB4jwjyfDYg7h\ncZzx5yrPskXZTnPsDittCqp8uZuTrwRr3aiyD6XWNB0q8Il1QwB06RHMMX+VQr4k\nK17p7PgNfAZyIzmVGqW4I+hr3KWvh1XMPYW7nmpsprMliRk2ht7Q1ZM1FuipdiPi\nY6LK4qRke1Lz8cBBZ6alq08FBuRI391LbeTWIGRCJER6PIeaOS6VQaQRMrS9mhNL\nivT/ha3tpHlB5wMVjdScMsZfuE5RMaJiqne1NH7GM4sJ69MajPhnnYURK6A1je2e\niDxB9xvDAgMBAAECggEAA5VduqpKOcYX7LebeYarDaTEt5m1fzmpHKgbBxg80Z5o\ne6VqhP0OGTEUEkFvxhhQzLFIZg8DhjsNjcxZ/2nvULS/dbgWLsDJ4IK3ehJllLwd\nD/Do5JfWE2Emoxph+5w/Eav1TldzarTHpeXdXWfY9VnLPjF0q77KslFphk405dtD\nhYQuTzl1PkyHv53ckvJir74JratP1BbKHygprnvBwTGi60/dACUM75VVslC/Q9PZ\nm4wR5nnG/xJ+FfTN3QG+WJjbgnoHb1qVYggI0LN71DHmhvttZudaTrzvvIfZuBNs\ngiMmfQtgSYi9DnB5oq8vzCzMM7qXE5okM3PlqvtQcQKBgQDyDuH5T9qt1myi5fKR\naRCYY6JsURC9LM5+InuSEDm/y39K8gisphJ4VtWq9pVy6RW4tLxEZsvlA2dxiAUR\nBg0PWHABRUB3/VstC4ei65MTNdfaimNOQmzz7gWVil3R1luRlxbVVpyJ092VTQhQ\nC5tN4xfXQBn+IlrJNu/n6EZgXQKBgQDPBLAIrvSeJmuab2tXUCA+3DBV8VOQwOWr\nl9+7GZCEhOpGA+CR39aWD8K7smiSHGkPbWpuPzlYa2r5QexMtAZsBsrJA5GrXMM5\nGOBuawjrTJoD217snD/Fifg4cFmsn3tsZvACfOviQpUKKPSQ2J6JmtKyfk0EFzUU\ns6ExvRoqnwKBgAuJ0hPETrRCqGMLewibbYMWHMP1CUs7O4yfsCxCQb52wNaduvQf\n5nl+CilgH7eejL6FPwQzsjx0cRXkWfl5xF2a5Zvp5SzTEumOxyRo/lXIF0X/msQ8\nPl1SV0nNkrNR+IN0JE5/Fm8rfkCDr4XBR+HqlVRZZePLV3CIAd+YHuKxAoGASwcf\n5YXDEi5KgUYwWQypIx8aRYuZBbVjh7UbWOwC/IRPg+CT20qMswYzRWN7krjJOtYk\n5J/1YJ5Nvtitk38LdMthY0jv2nNcLa1eaaZRLTYt+4fd91MJqcY/N/VACtgiGz+T\nbNNpii8nZO9C89wOWUDLa/VqZDkk+8O+gBBRE3ECgYEAvonlUusZ2cpkEQFFmAxK\nJZnALaNlOxHFTGjafqOCnH8ePmc+Tk6E23dLrO2qF0p7nNtwws+cUVang4rgKO6B\nY+bBeIofJhd1QZuRiRLGtUsrHMha1AslI4DIerphE17sOpqds5k0cSs7VXmNt50/\nQOViL10rigiFXVdHCRTznGo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "datalake-serviceaccount@windy-forge-404504.iam.gserviceaccount.com",
+  "client_id": "116714895013410395583",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/datalake-serviceaccount%40windy-forge-404504.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

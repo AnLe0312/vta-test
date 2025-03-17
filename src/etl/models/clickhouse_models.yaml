@@ -1,8 +1,4 @@
 clickhouse:
-  host: "ofvssfn5dd.us-central1.gcp.clickhouse.cloud"
-  port: 8443
-  user: "default"
-  password: "upU57JMLE.d30"
   databases:
     prod_source:  
       name: "prod_source"
