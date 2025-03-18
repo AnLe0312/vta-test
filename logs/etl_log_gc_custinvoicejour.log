@@ -1,0 +1,5 @@
+2025-03-18 11:43:50,404 [INFO] ETL Pipeline started for job: gc_custinvoicejour
+2025-03-18 11:43:50,405 [INFO] Starting Extract
+2025-03-18 11:43:52,944 [INFO] Skipping processing of raw/CUSTINVOICEJOUR.parquet. The file is not newer than the table.
+2025-03-18 11:43:52,945 [INFO] Completed Extract in 2.54 seconds, memory used: 6.12 MB, CPU used: 6.80%
+2025-03-18 11:43:52,945 [INFO] ETL Pipeline completed for job: gc_custinvoicejour in 2.54 seconds, total memory used: 6.12 MB, total CPU used: 0.00%
