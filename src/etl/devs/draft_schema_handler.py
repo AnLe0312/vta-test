@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import math
+import logging
 import os
 import sys 
 
@@ -46,11 +47,11 @@ def fetch_table_schema(database_name, table_name):
 
 
 # Transform DataFrame columns to match ClickHouse schema
-def transform_dataframe_to_schema(df, schema, logger=None):
+def transform_dataframe_to_schema(df, schema):
     # Handle Date and DateTime columns to replace years in the 1900s (19xx) with NaT
     for col in df.columns:
         if col not in schema:
-            logger.warning(f"Column '{col}' is missing from the ClickHouse schema and will be skipped.")
+            logging.warning(f"Column '{col}' is missing from the ClickHouse schema and will be skipped.")
             continue  # Skip the column if it's missing from the schema
         # If the column is Date or DateTime, replace dates with years in the 1900s (19xx) with None
         if df[col].dtype in ["datetime64[ns]", "datetime64[ns, UTC]"]:

@@ -17,13 +17,21 @@ from datetime import datetime, timedelta
 def setup_logger(job_name):
     """Sets up a logger for the ETL job, saving logs per job_name."""
     log_filename = f"{current_path}/etl_log_{job_name}.log"
+
+    logger = logging.getLogger(job_name)
+
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
     logging.basicConfig(
         filename=log_filename,
-        level=logging.INFO,
+        level=logging.DEBUG,
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
 
-    logger = logging.getLogger(job_name)
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(console_handler)
     return logger
 
 

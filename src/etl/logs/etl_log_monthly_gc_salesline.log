@@ -1,0 +1,62 @@
+2025-03-19 22:53:03,084 [INFO] ETL Pipeline started for job: monthly_gc_salesline
+2025-03-19 22:53:03,084 [INFO] Starting Extract
+2025-03-19 22:53:03,126 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-19 22:53:18,446 [INFO] Skipping processing of raw/SALESLINE.parquet. The file is not newer than the table.
+2025-03-19 22:53:18,550 [INFO] Completed Extract in 15.47 seconds, memory used: 936.89 MB, CPU used: 9.30%
+2025-03-19 22:53:18,550 [INFO] ETL Pipeline completed for job: monthly_gc_salesline in 15.47 seconds, total memory used: 936.89 MB, total CPU used: 0.00%
+2025-03-19 22:53:39,361 [INFO] ETL Pipeline started for job: monthly_gc_salesline
+2025-03-19 22:53:39,361 [INFO] Starting Extract
+2025-03-19 22:53:39,403 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-19 22:53:50,675 [INFO] Skipping processing of raw/SALESLINE.parquet. The file is not newer than the table.
+2025-03-19 22:53:50,789 [INFO] Completed Extract in 11.43 seconds, memory used: 930.69 MB, CPU used: 10.20%
+2025-03-19 22:53:50,789 [INFO] ETL Pipeline completed for job: monthly_gc_salesline in 11.43 seconds, total memory used: 930.69 MB, total CPU used: 0.00%
+2025-03-19 22:54:05,937 [INFO] ETL Pipeline started for job: monthly_gc_salesline
+2025-03-19 22:54:05,937 [INFO] Starting Extract
+2025-03-19 22:54:05,990 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-19 22:54:17,158 [INFO] Skipping processing of raw/SALESLINE.parquet. The file is not newer than the table.
+2025-03-19 22:54:17,280 [INFO] Completed Extract in 11.34 seconds, memory used: 935.36 MB, CPU used: 10.70%
+2025-03-19 22:54:17,280 [INFO] ETL Pipeline completed for job: monthly_gc_salesline in 11.34 seconds, total memory used: 935.36 MB, total CPU used: 0.00%
+2025-03-19 22:54:31,161 [INFO] ETL Pipeline started for job: monthly_gc_salesline
+2025-03-19 22:54:31,161 [INFO] Starting Extract
+2025-03-19 22:54:31,204 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-19 22:54:41,925 [INFO] Skipping processing of raw/SALESLINE.parquet. The file is not newer than the table.
+2025-03-19 22:54:42,035 [INFO] Completed Extract in 10.87 seconds, memory used: 942.60 MB, CPU used: 11.30%
+2025-03-19 22:54:42,035 [INFO] ETL Pipeline completed for job: monthly_gc_salesline in 10.87 seconds, total memory used: 942.60 MB, total CPU used: 0.00%
+2025-03-19 22:54:53,095 [INFO] ETL Pipeline started for job: monthly_gc_salesline
+2025-03-19 22:54:53,095 [INFO] Starting Extract
+2025-03-19 22:54:53,140 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-19 22:55:04,091 [INFO] Extracted 180405 records from GCS.
+2025-03-19 22:55:04,194 [INFO] Completed Extract in 11.10 seconds, memory used: 1196.27 MB, CPU used: 9.90%
+2025-03-19 22:55:04,194 [INFO] Starting Transform
+2025-03-19 22:55:09,393 [INFO] Transformed 180405 records.
+2025-03-19 22:55:09,393 [INFO] Completed Transform in 5.20 seconds, memory used: 367.01 MB, CPU used: 14.60%
+2025-03-19 22:55:09,393 [INFO] Starting Load
+2025-03-19 22:55:47,506 [INFO] Loading 180405 records into prod_source.salesline.
+2025-03-19 22:55:49,206 [DEBUG] Primary key for prod_source.salesline: RECID
+2025-03-19 22:55:49,578 [DEBUG] Parsed data rows count: 180405
+2025-03-19 22:56:09,996 [DEBUG] Valid rows count: 180405
+2025-03-19 22:56:12,782 [DEBUG] Starting batch insert: 180405 rows to insert.
+2025-03-19 22:56:18,424 [INFO] Batch 1/19 inserted successfully in 5.36s
+2025-03-19 22:56:23,539 [INFO] Batch 2/19 inserted successfully in 4.83s
+2025-03-19 22:56:28,331 [INFO] Batch 3/19 inserted successfully in 4.52s
+2025-03-19 22:56:32,853 [INFO] Batch 4/19 inserted successfully in 4.26s
+2025-03-19 22:56:37,644 [INFO] Batch 5/19 inserted successfully in 4.52s
+2025-03-19 22:56:42,411 [INFO] Batch 6/19 inserted successfully in 4.49s
+2025-03-19 22:56:47,602 [INFO] Batch 7/19 inserted successfully in 4.93s
+2025-03-19 22:56:52,413 [INFO] Batch 8/19 inserted successfully in 4.53s
+2025-03-19 22:56:57,441 [INFO] Batch 9/19 inserted successfully in 4.77s
+2025-03-19 22:57:02,200 [INFO] Batch 10/19 inserted successfully in 4.52s
+2025-03-19 22:57:06,801 [INFO] Batch 11/19 inserted successfully in 4.39s
+2025-03-19 22:57:11,313 [INFO] Batch 12/19 inserted successfully in 4.31s
+2025-03-19 22:57:15,949 [INFO] Batch 13/19 inserted successfully in 4.43s
+2025-03-19 22:57:20,641 [INFO] Batch 14/19 inserted successfully in 4.48s
+2025-03-19 22:57:25,460 [INFO] Batch 15/19 inserted successfully in 4.60s
+2025-03-19 22:57:29,978 [INFO] Batch 16/19 inserted successfully in 4.31s
+2025-03-19 22:57:34,490 [INFO] Batch 17/19 inserted successfully in 4.30s
+2025-03-19 22:57:39,029 [INFO] Batch 18/19 inserted successfully in 4.33s
+2025-03-19 22:57:39,752 [INFO] Batch 19/19 inserted successfully in 0.52s
+2025-03-19 22:57:39,752 [INFO] Insert completed: 180405 rows in 86.97s
+2025-03-19 22:57:39,752 [DEBUG] Optimizing table with query: OPTIMIZE TABLE prod_source.salesline FINAL
+2025-03-19 22:57:40,583 [INFO] Query of type 'INSERT' for table prod_source.salesline has been generated.
+2025-03-19 22:57:40,629 [INFO] Completed Load in 151.24 seconds, memory used: -11.18 MB, CPU used: 10.90%
+2025-03-19 22:57:40,629 [INFO] ETL Pipeline completed for job: monthly_gc_salesline in 167.53 seconds, total memory used: 1552.11 MB, total CPU used: 0.00%

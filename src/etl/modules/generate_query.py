@@ -22,7 +22,6 @@ def load_yaml_config():
     try:
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
-            logging.debug(f"Loaded YAML config successfully from {config_path}")
             return config
     except Exception as e:
         logging.error(f"Failed to load YAML config: {e}", exc_info=True)
@@ -47,64 +46,66 @@ def get_primary_key_col_from_yaml(database_name, table_name):
 def parse_values_row(row):
     pattern = re.compile(
         r"""(
-        '(?:''|[^'])*'                          |   # String in single quotes
-        "[^"]*"                                 |   # String in double quotes
+        '(?:''|[^'])*'                          |   # String enclosed in single quotes
+        "[^"]*"                                 |   # String enclosed in double quotes
         NULL                                    |   # NULL value
-        [+-]?\d+(\.\d+)?                        |   # Integer, float, negative numbers
         \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}     |   # Datetime format '%Y-%m-%d %H:%M:%S'
+        [+-]?\d+\.\d+                           |   # Floating point number
+        [+-]?\d+                                |   # Integer number
         ''                                      |   # Empty string ''
-        [^,]+                                       # Unquoted text values
+        [^,]+                                       # Other unquoted values
         )
         """,
         re.VERBOSE
     )
-    return [match.group(0) for match in pattern.finditer(row)]
+    values = [match.group(0) for match in pattern.finditer(row)]
+    return [value.replace("\n", " ") if isinstance(value, str) else value for value in values]
 
 
 # Retry logic for executing queries
 def execute_with_retries(query, client, retries=3, delay=5):
-    attempt = 0
-    while attempt < retries:
+    for attempt in range(retries):
         try:
-            logging.debug(f"Executing query (Attempt {attempt + 1}): {query}")
             client.query(query)
-            logging.info("✅ Data inserted successfully!")
             return
         except Timeout as e:
-            logging.warning(f"⏳ Timeout error (Attempt {attempt + 1}): {e}")
-            attempt += 1
-            if attempt < retries:
-                logging.info(f"Retrying in {delay} seconds...")
-                time.sleep(delay)
-                delay *= 2
-            else:
-                logging.error("❌ Max retries reached, operation failed.", exc_info=True)
-                raise
+            logging.warning(f"Timeout (Attempt {attempt + 1}): {e}")
         except Exception as e:
-            logging.error(f"🚨 Error inserting batch (Attempt {attempt + 1}): {e}", exc_info=True)
+            logging.error(f"Query execution failed: {e}", exc_info=True)
             raise
+        time.sleep(delay)
+        delay *= 2
 
 
 # Batch insert function
-def insert_in_batches(data, client, database_name, table, col_names_str, batch_size=1000):
+def insert_in_batches(data, client, database_name, table, col_names_str, batch_size=10000):
     total_rows = len(data.split("\n"))
+    total_batches = (total_rows + batch_size - 1) // batch_size 
+    start_time = time.time() 
     logging.debug(f"Starting batch insert: {total_rows} rows to insert.")
     
-    for start in range(0, total_rows, batch_size):
+    for batch_num, start in enumerate(range(0, total_rows, batch_size), start=1):
         batch_data = "\n".join(data.split("\n")[start:start + batch_size])
+        batch_start_time = time.time()
         batch_insert_query = f"INSERT INTO {database_name}.{table} ({col_names_str}) VALUES {batch_data};"
-        logging.debug(f"Inserting batch {start} to {start + batch_size}")
+        
         execute_with_retries(batch_insert_query, client)
+
+        batch_end_time = time.time() 
+        batch_duration = batch_end_time - batch_start_time
+        logging.info(f"Batch {batch_num}/{total_batches} inserted successfully in {batch_duration:.2f}s")
+
+    total_duration = time.time() - start_time  # Tính tổng thời gian chạy
+    logging.info(f"Insert completed: {total_rows} rows in {total_duration:.2f}s")
 
 
 # Generate SQL query for INSERT or DELETE
-def generate_query(query_type, database_name, table, condition=None, data=None, interval='15 DAY'):
+def generate_query(query_type, database_name, table, condition=None, data=None, interval='15 DAY', logger=None):
 
     client = get_clickhouse_connection(database_name)
 
     # Get column names and types
     describe_query = f"DESCRIBE TABLE {database_name}.{table}"
-    logging.debug(f"Fetching column names: {describe_query}")
 
     try:
         query_result = client.query(describe_query)
@@ -118,7 +119,7 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
         try:
             primary_key_col = get_primary_key_col_from_yaml(database_name, table)
         except ValueError as e:
-            logging.warning(f"Using default primary key {primary_key_col} due to error: {e}")
+            logger.warning(f"Using default primary key {primary_key_col} due to error: {e}")
 
         col_names_str = ", ".join(column_names)
 
@@ -126,10 +127,8 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
             if not data:
                 raise ValueError("Data must be provided for INSERT queries.")
 
-            logging.debug(f"Raw data received for INSERT: {data}")
-
             data_rows = [row.strip() for row in re.split(r"\),\s*\(", data.strip("()")) if row.strip()]
-            logging.debug(f"Parsed data rows count: {len(data_rows)}")
+            logger.debug(f"Parsed data rows count: {len(data_rows)}")
 
             # Get primary key index and type
             pk_index = column_names.index(primary_key_col)
@@ -150,12 +149,12 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
                         return isinstance(float(value), float)
                     if pk_type.startswith("String"):
                         return isinstance(str(value), str)
-                    logging.warning(f"Unknown primary key type '{pk_type}' for value '{value}'")
+                    logger.warning(f"Unknown primary key type '{pk_type}' for value '{value}'")
                     return False
                 except ValueError:
                     return False
 
-            # 🛠️ Process each data row
+            # Process each data row
             for row in data_rows:
                 try:
                     parsed_row = parse_values_row(row)
@@ -165,15 +164,15 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
                     if is_valid_pk(pk_value, pk_type):
                         valid_rows.append(parsed_row)
                     else:
-                        logging.error(f"Invalid primary key value '{pk_value}' (type: '{pk_type}') at row: {row}. Skipping.")
+                        logger.error(f"Invalid primary key value '{pk_value}' (type: '{pk_type}') at row: {row}. Skipping.")
                 except Exception as e:
-                    logging.error(f"Error parsing row: {row}. Skipping. Error: {e}")
+                    logger.error(f"Error parsing row: {row}. Skipping. Error: {e}")
                     continue
 
-            logging.debug(f"Valid rows count: {len(valid_rows)}")
+            logger.debug(f"Valid rows count: {len(valid_rows)}")
 
             if not valid_rows:
-                logging.info("✨ No valid rows to insert.")
+                logger.info("✨ No valid rows to insert.")
                 return
 
             new_data_string = ",\n".join([f"({','.join(map(str, row))})" for row in valid_rows])
@@ -181,19 +180,19 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
 
             # Optional: Optimize the table after insert/update
             optimize_query = f"OPTIMIZE TABLE {database_name}.{table} FINAL"
-            logging.debug(f"Optimizing table with query: {optimize_query}")
+            logger.debug(f"Optimizing table with query: {optimize_query}")
             client.query(optimize_query)
 
         elif query_type == 'DELETE':
             if not condition:
                 raise ValueError("Condition must be provided for DELETE queries.")
             delete_query = f"ALTER TABLE {database_name}.{table} DELETE WHERE {condition}"
-            logging.debug(f"Executing DELETE query: {delete_query}")
+            logger.debug(f"Executing DELETE query: {delete_query}")
             client.query(delete_query)
 
         else:
             raise ValueError("Invalid query type. Choose from 'INSERT' or 'DELETE'.")
 
     except Exception as e:
-        logging.error(f"Error generating query: {e}", exc_info=True)
+        logger.error(f"Error generating query: {e}", exc_info=True)
         raise

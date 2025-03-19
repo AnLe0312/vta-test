@@ -13,7 +13,7 @@ sys.path.append(parent_path)
 
 from modules.db_connector import get_clickhouse_connection
 from modules.gcs_handler import read_gcs_file
-from modules.schema_handler import fetch_table_schema, transform_dataframe_to_schema, prepare_sql_data
+from modules.schema_handler import fetch_table_updated_at, fetch_table_schema, transform_dataframe_to_schema, prepare_sql_data
 from modules.generate_query import generate_query, get_primary_key_col_from_yaml, parse_values_row
 from datetime import datetime
 from requests.exceptions import Timeout
@@ -29,25 +29,30 @@ file_path = config["gcs"]["files"].get("salesline")
 
 # Read data from GCS
 df = read_gcs_file(bucket_name, file_path)
-# df = pd.DataFrame(df)
+
+df['MODIFIEDDATETIME'] = pd.to_datetime(df['MODIFIEDDATETIME'], errors='coerce')
+table_updated_at = fetch_table_updated_at("prod_source", "salesline")
+threshold_date = table_updated_at - pd.DateOffset(months=1)
+
+extracted_data = df[df['MODIFIEDDATETIME'] > threshold_date].copy().reset_index(drop=True)
 
 # Fetch schema from ClickHouse
 schema = fetch_table_schema("prod_source", "salesline")
 
 # Transform data
-df = transform_dataframe_to_schema(df, schema)
-df = df.head(1)
+df = transform_dataframe_to_schema(extracted_data, schema)
+# df = df.head(9)
 pd.set_option('display.max_columns', None)
 # pd.set_option('display.max_rows', None)
 # print(df[df["RECID"] == 5644714290][["COVSTATUS"]])
-# df = df[df["RECID"] == 5644714290]
+df = df[df["RECID"] == 5683610993]
 # for index, row in df.iterrows():
 #       print(row)
 # print(len(df.columns))
 
 # Convert to ClickHouse VALUES string
 data = prepare_sql_data(df)
-print(df)
+# print(df)
 
 database_name = "prod_source"
 table_name = "salesline"
@@ -58,28 +63,29 @@ table_name = "salesline"
 # Take the first batch for testing (optional)
 # first_tuple = data.split("\n")[0]
 
-# describe_query = f"DESCRIBE TABLE {database_name}.{table_name}"
-# query_result = client.query(describe_query)
-# column_info = [(col[0], col[1]) for col in query_result.result_rows]  # Column name and type
-# column_names = [col[0] for col in column_info]
+describe_query = f"DESCRIBE TABLE {database_name}.{table_name}"
+query_result = client.query(describe_query)
+column_info = [(col[0], col[1]) for col in query_result.result_rows]  # Column name and type
+column_names = [col[0] for col in column_info]
 
 # if not column_names:
 #       raise ValueError(f"Table {database_name}.{table_name} has no columns.")
 
-# primary_key_col = get_primary_key_col_from_yaml(database_name, table_name)
+primary_key_col = get_primary_key_col_from_yaml(database_name, table_name)
 
-# col_names_str = ", ".join(column_names)
+col_names_str = ", ".join(column_names)
 
-# data_rows = [row.strip() for row in re.split(r"\),\s*\(", data.strip("()")) if row.strip()]
-
-# parsed_rows = []
-# for row in data_rows:
-#       parsed_row = parse_values_row(row)
-#       parsed_rows.append(parsed_row)
-
-# pk_index = column_names.index(primary_key_col)
-# pk_values = [parse_values_row(row)[pk_index].strip(" '\"") for row in data_rows]
-
+data_rows = [row.strip() for row in re.split(r"\),\s*\(", data.strip("()")) if row.strip()]
+# print(data_rows)
+parsed_rows = []
+for row in data_rows:
+      parsed_row = parse_values_row(row)
+      parsed_rows.append(parsed_row)
+# print(parsed_row)
+pk_index = column_names.index(primary_key_col)
+pk_values = [parse_values_row(row)[pk_index].strip(" '\"") for row in data_rows]
+pk_type = next((col_type for col_name, col_type in column_info if col_name == primary_key_col), None)
+# print(pk_type)
 # batch_size = 3  # You can adjust this based on your query size limits
 # existing_data = []
 # for start in range(0, len(pk_values), batch_size):
