@@ -4,19 +4,18 @@ import sys
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path)
 
-import pandas as pd
 import yaml
 from datetime import datetime
-from modules.gcs_handler import read_gcs_file
+from modules.gcs_handler import get_file_last_modified_time, read_gcs_file
 from modules.generate_query import generate_query
 from modules.schema_handler import fetch_table_updated_at, fetch_table_schema, transform_dataframe_to_schema, prepare_sql_data
 from logs.etl_logger import setup_logger, track_performance, run_etl_pipeline
 
 # Setup job details
-job_name = "gc_custinvoicejour"
-file_key = "custinvoicejour"
+job_name = "gc_salesline"
+file_key = "salesline"
 database_name = "prod_source"
-table_name = "custinvoicejour"
+table_name = "salesline"
 query_type = "INSERT"
 
 # Load configuration
@@ -32,21 +31,18 @@ logger = setup_logger(job_name)
 
 @track_performance("Extract", retries=3, backoff=2)
 def extract(logger):
-    """Extract data from GCS and filter based on MODIFIEDDATETIME."""
-    df = read_gcs_file(bucket_name, file_path)
-    
-    if 'MODIFIEDDATETIME' not in df.columns:
-        logger.error(f"MODIFIEDDATETIME column not found in the file {file_path}.")
-        return None
-    
-    df['MODIFIEDDATETIME'] = pd.to_datetime(df['MODIFIEDDATETIME'], errors='coerce')
+    """Extract data from GCS."""
+    gcs_last_modified_time = get_file_last_modified_time(bucket_name, file_path)
+    gcs_last_modified_time = datetime.strptime(gcs_last_modified_time, '%Y-%m-%d %H:%M:%S')
     table_updated_at = fetch_table_updated_at(database_name, table_name)
-    
-    # Return the entire file or filter based on table_updated_at
-    if table_updated_at is None or df['MODIFIEDDATETIME'].max() > table_updated_at:
-        return df[df['MODIFIEDDATETIME'] > table_updated_at] if table_updated_at else df
-    logger.info(f"Skipping processing of {file_path}. The file is not newer than the table.")
-    return None
+
+    # Check if the GCS file is newer than the table
+    if table_updated_at is None or gcs_last_modified_time > table_updated_at:
+        return read_gcs_file(bucket_name, file_path)
+    else:
+        logger.info(f"Skipping processing of {file_path}. The file is not newer than the table.")
+        return None
+
 
 @track_performance("Transform", retries=3, backoff=2)
 def transform(data, logger):
@@ -54,7 +50,10 @@ def transform(data, logger):
     if data is None or data.empty:
         raise ValueError("No data to transform")
     schema = fetch_table_schema(database_name, table_name)
-    return transform_dataframe_to_schema(data, schema)
+    df = transform_dataframe_to_schema(data, schema)
+    df = df.head(3)
+    return df
+    # return transform_dataframe_to_schema(data, schema)
 
 
 @track_performance("Load", retries=3, backoff=2)
@@ -63,11 +62,8 @@ def load(data, logger):
     if data is None or data.empty:
         raise ValueError("No data to load")
     prepared_data = prepare_sql_data(data)
-    if not prepared_data:
-        logger.error("No prepared data to load.")
-        return
     query = generate_query(query_type=query_type, database_name=database_name, table=table_name, data=prepared_data, interval='12 DAY')
-    logger.info(f"Query of type '{query_type}' for table {database_name}.{table_name} has been generated.")
+    logger.info(f"Generated query: {query[:100]}...")
 
 
 # Run ETL pipeline

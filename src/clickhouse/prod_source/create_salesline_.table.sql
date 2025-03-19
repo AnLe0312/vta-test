@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS prod_source.salesline (
     SALESID String,
-    LINENUM UInt16,
+    LINENUM UInt64,
     ITEMID String,
     SALESSTATUS UInt8,
     NAME String,

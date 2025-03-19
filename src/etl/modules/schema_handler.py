@@ -99,7 +99,17 @@ def transform_dataframe_to_schema(df, schema):
             continue
 
         # Transform columns to match schema types
-        if dtype == "Date":
+        if dtype == "String":
+            df[col] = df[col].astype(str).fillna('')
+        elif dtype in ["Int32", "Int64", "UInt8", "UInt16", "UInt32", "UInt64"]:
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
+        elif dtype in ["Float32", "Float64"]:
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0.0)
+        elif dtype == "Boolean":
+            df[col] = df[col].astype('bool', errors='ignore').fillna(False)
+        elif dtype in ["Enum8", "Enum16", "UUID"]:
+            df[col] = df[col].astype(str).fillna('unknown')
+        elif dtype == "Date":
             df[col] = pd.to_datetime(df[col], errors='coerce').dt.date
             df[col] = df[col].where(df[col].notnull(), None)
         elif dtype == "DateTime":

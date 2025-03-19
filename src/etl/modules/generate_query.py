@@ -15,17 +15,6 @@ sys.path.append(parent_path)
 
 from modules.db_connector import get_clickhouse_connection
 
-# Setup logging per table
-def setup_logging(table_name):
-    log_filename = os.path.join(logs_path, f"query_{table_name}.log")
-    logging.basicConfig(
-        filename=log_filename, 
-        level=logging.DEBUG, 
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        filemode='a'  # 'a' means append mode (not overwrite)
-    )
-    logging.debug(f"Logging initialized for table: {table_name}")
-
 
 # Helper function to load YAML config
 def load_yaml_config():
@@ -108,18 +97,8 @@ def insert_in_batches(data, client, database_name, table, col_names_str, batch_s
         execute_with_retries(batch_insert_query, client)
 
 
-# Update records in batches
-def update_in_batches(update_queries, client, batch_size=1000):
-    for start in range(0, len(update_queries), batch_size):
-        batch_queries = update_queries[start:start + batch_size]
-        for update_query in batch_queries:
-            execute_with_retries(update_query, client)
-
-
 # Generate SQL query for INSERT or DELETE
 def generate_query(query_type, database_name, table, condition=None, data=None, interval='15 DAY'):
-
-    setup_logging(table)
 
     client = get_clickhouse_connection(database_name)
 
@@ -152,43 +131,44 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
             data_rows = [row.strip() for row in re.split(r"\),\s*\(", data.strip("()")) if row.strip()]
             logging.debug(f"Parsed data rows count: {len(data_rows)}")
 
+            # Get primary key index and type
             pk_index = column_names.index(primary_key_col)
+            pk_type = next((col_type for col_name, col_type in column_info if col_name == primary_key_col), None)
 
-            parsed_rows = []
+            valid_rows = []
+
+            # Primary key validation function
+            def is_valid_pk(value, pk_type):
+                """ Validate primary key value against its data type """
+                try:
+                    # Try direct type conversion
+                    if pk_type.startswith("UInt"):
+                        return isinstance(int(value), int) and int(value) >= 0
+                    if pk_type.startswith("Int"):
+                        return isinstance(int(value), int)
+                    if pk_type.startswith("Float"):
+                        return isinstance(float(value), float)
+                    if pk_type.startswith("String"):
+                        return isinstance(str(value), str)
+                    logging.warning(f"Unknown primary key type '{pk_type}' for value '{value}'")
+                    return False
+                except ValueError:
+                    return False
+
+            # 🛠️ Process each data row
             for row in data_rows:
                 try:
                     parsed_row = parse_values_row(row)
-                    parsed_rows.append(parsed_row)
-                except Exception as e:
-                    logging.error(f"Error parsing row: {row}. Skipping this row. Error: {e}")
-                    continue  # Skip this row and continue with the next
+                    pk_value = parsed_row[pk_index]
 
-            logging.debug(f"Parsed rows count: {len(parsed_rows)}")
-
-            pk_values = []
-            valid_rows = []  # To hold rows that passed validation
-            for row in parsed_rows:
-                try:
-                    # Validate each row based on column types
-                    valid = True
-                    for i, (col_name, col_type) in enumerate(column_info):
-                        if "UInt" in col_type:  # Check if column is supposed to be an integer (UInt)
-                            try:
-                                # Try converting to int (UInt64 or other UInt type)
-                                row[i] = int(row[i])  # Modify the row to hold valid data
-                            except ValueError:
-                                logging.error(f"Type mismatch: Cannot convert '{row[i]}' to {col_type} in column '{col_name}'. Skipping this row.")
-                                logging.info(f"Invalid row (skipping): {row}")  # Log the row that failed validation
-                                valid = False
-                                break  # Exit validation loop early if there's a mismatch
-                    if valid:
-                        valid_rows.append(row)  # Only add valid rows
+                    # Check if the primary key value matches its type
+                    if is_valid_pk(pk_value, pk_type):
+                        valid_rows.append(parsed_row)
                     else:
-                        continue  # Skip invalid rows
+                        logging.error(f"Invalid primary key value '{pk_value}' (type: '{pk_type}') at row: {row}. Skipping.")
                 except Exception as e:
-                    logging.error(f"Error validating row: {row}. Skipping this row. Error: {e}")
-                    logging.info(f"Error row: {row} - {e}")  # Log the row that failed due to an exception
-                    continue  # Skip this row and continue with the next
+                    logging.error(f"Error parsing row: {row}. Skipping. Error: {e}")
+                    continue
 
             logging.debug(f"Valid rows count: {len(valid_rows)}")
 
@@ -196,90 +176,8 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
                 logging.info("✨ No valid rows to insert.")
                 return
 
-            # Extract primary key values for checking existing data
-            for row in valid_rows:
-                pk_value = row[pk_index]
-                if isinstance(pk_value, str):
-                    pk_values.append(pk_value.strip(" '\""))  # Strip quotes for strings
-                else:
-                    pk_values.append(str(pk_value))  # For numbers, just convert to string
-
-            logging.debug(f"Extracted PK values sample: {pk_values[:5]}")
-
-            # Check if the table has any existing data by fetching some rows
-            existing_data_query = f"""
-                SELECT {primary_key_col}
-                FROM {database_name}.{table}
-                LIMIT 1
-            """
-            existing_data = client.query(existing_data_query).result_rows
-
-            # If no data exists, treat all rows as new records
-            if not existing_data:
-                logging.info("✨ No existing data found. Inserting all records as new.")
-                new_data_string = ",\n".join([f"({','.join(map(str, row))})" for row in valid_rows])
-                insert_in_batches(new_data_string, client, database_name, table, col_names_str)
-                return
-
-            # Fetch existing rows based on the primary key and filter those modified in the last n days or months
-            existing_data_query = f"""
-                SELECT {primary_key_col}, MODIFIEDDATETIME
-                FROM {database_name}.{table}
-                WHERE MODIFIEDDATETIME >= NOW() - INTERVAL {interval}
-            """
-            existing_data = client.query(existing_data_query).result_rows
-
-            # Convert existing data to a dictionary for fast lookups
-            existing_data_dict = {row[0]: row[1] for row in existing_data}
-
-            # Prepare new and updated rows
-            new_rows = []
-            updated_rows = []
-
-            for row in valid_rows:
-                pk_value = row[pk_index]
-
-                # Ensure primary key type matches existing data
-                try:
-                    pk_type = type(next(iter(existing_data_dict.keys())))
-                    pk_value = pk_type(pk_value)
-                except Exception as e:
-                    print(f"⚠️ Type casting error for primary key: {e}")
-                    continue
-
-                # Determine if the row is new or updated
-                if pk_value not in existing_data_dict:
-                    new_rows.append(row)  # New record, needs to be inserted
-                else:
-                    try:
-                        # Parse the MODIFIEDDATETIME value
-                        modified_datetime = row[column_names.index('MODIFIEDDATETIME')].strip("'\"")
-                        datetime_type = type(next(iter(existing_data_dict.values())))
-                        modified_datetime = datetime.strptime(modified_datetime, '%Y-%m-%d %H:%M:%S') \
-                            if datetime_type == datetime else str(modified_datetime)
-                    except Exception as e:
-                        print(f"⚠️ Date casting error: {e}")
-                        continue
-
-                    # Check if the row has a more recent modification time
-                    if modified_datetime > existing_data_dict[pk_value]:
-                        updated_rows.append(row)  # Updated record, needs to be updated
-
-            logging.info(f"New records: {len(new_rows)}, Updated records: {len(updated_rows)}")
-
-            if new_rows:
-                new_data_string = ",\n".join([f"({','.join(map(str, row))})" for row in new_rows])
-                insert_in_batches(new_data_string, client, database_name, table, col_names_str)
-
-            if updated_rows:
-                update_queries = []
-                for row in updated_rows:
-                    pk_value = row[pk_index]
-                    set_values = ", ".join([f"{column_names[i]} = '{row[i]}'" for i in range(len(row))])
-                    update_query = f"ALTER TABLE {database_name}.{table} UPDATE {set_values} WHERE {primary_key_col} = '{pk_value}'"
-                    update_queries.append(update_query)
-
-                update_in_batches(update_queries, client)
+            new_data_string = ",\n".join([f"({','.join(map(str, row))})" for row in valid_rows])
+            insert_in_batches(new_data_string, client, database_name, table, col_names_str)
 
             # Optional: Optimize the table after insert/update
             optimize_query = f"OPTIMIZE TABLE {database_name}.{table} FINAL"

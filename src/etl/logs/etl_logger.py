@@ -131,9 +131,9 @@ def run_etl_pipeline(job_name, extract, transform, load):
 
         # Run ETL steps
         data = extract(logger)
-        if data:
+        if data is not None and not data.empty:
             transformed_data = transform(data, logger)
-            if transformed_data:
+            if transformed_data is not None and not transformed_data.empty:
                 load(transformed_data, logger)
 
         # Capture total performance stats

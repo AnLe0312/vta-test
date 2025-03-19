@@ -3,7 +3,7 @@ import sys
 
 # Set paths
 current_path = os.path.dirname(os.path.realpath(__file__))
-parent_path = os.path.dirname(current_path)
+parent_path = os.path.dirname(os.path.dirname(current_path))
 sql_folder_path = os.path.join(parent_path, "clickhouse\prod_source")
 sys.path.append(parent_path)
 
