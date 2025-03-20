@@ -13,7 +13,7 @@ from modules.schema_handler import fetch_table_updated_at, fetch_table_schema, t
 from logs.etl_logger import setup_logger, track_performance, run_etl_pipeline
 
 # Setup job details
-job_name = "daily_gc_salesline"
+job_name = "monthly_SRC_salesline"
 file_key = "salesline"
 database_name = "prod_source"
 table_name = "salesline"
@@ -41,10 +41,12 @@ def extract(logger):
     
     df['MODIFIEDDATETIME'] = pd.to_datetime(df['MODIFIEDDATETIME'], errors='coerce')
     table_updated_at = fetch_table_updated_at(database_name, table_name)
+
+    threshold_date = table_updated_at - pd.DateOffset(months=1)
     
     # Return the entire file or filter based on table_updated_at
-    if table_updated_at is None or df['MODIFIEDDATETIME'].max() > table_updated_at:
-        extracted_data = df[df['MODIFIEDDATETIME'] > table_updated_at].copy().reset_index(drop=True) if table_updated_at else df
+    if df['MODIFIEDDATETIME'].max() > threshold_date:
+        extracted_data = df[df['MODIFIEDDATETIME'] > threshold_date].copy().reset_index(drop=True)
         logger.info(f"Extracted {len(extracted_data)} records from GCS.")
         return extracted_data
     logger.info(f"Skipping processing of {file_path}. The file is not newer than the table.")

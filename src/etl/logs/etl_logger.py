@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 
 def setup_logger(job_name):
     """Sets up a logger for the ETL job, saving logs per job_name."""
-    log_filename = f"{current_path}/etl_log_{job_name}.log"
+    log_filename = f"{current_path}/log_ETL_{job_name}.log"
 
     logger = logging.getLogger(job_name)
 
@@ -25,8 +25,10 @@ def setup_logger(job_name):
 
     logging.basicConfig(
         filename=log_filename,
+        encoding="utf-8",
         level=logging.DEBUG,
         format="%(asctime)s [%(levelname)s] %(message)s",
+        force=True
     )
 
     console_handler = logging.StreamHandler()
@@ -135,7 +137,11 @@ def run_etl_pipeline(job_name, extract, transform, load):
         pipeline_start_time = time.time()
         process = psutil.Process()
         pipeline_start_memory = process.memory_info().rss / 1024 / 1024
-        pipeline_start_cpu = psutil.cpu_percent(interval=None)
+
+        # Start CPU tracking using a time interval
+        psutil.cpu_percent(interval=None)  # Reset CPU tracking
+        time.sleep(1)  # Small delay to get more accurate CPU reading
+        cpu_start = psutil.cpu_percent(interval=1, percpu=False)  
 
         # Run ETL steps
         data = extract(logger)
@@ -147,7 +153,8 @@ def run_etl_pipeline(job_name, extract, transform, load):
         # Capture total performance stats
         total_duration = time.time() - pipeline_start_time
         total_memory_used = (process.memory_info().rss / 1024 / 1024) - pipeline_start_memory
-        total_cpu_used = psutil.cpu_percent(interval=None) - pipeline_start_cpu
+        cpu_end = psutil.cpu_percent(interval=1, percpu=False)  # Capture CPU after pipeline
+        total_cpu_used = (cpu_start + cpu_end) / 2  # Take the average CPU usage
 
         logger.info(
             f"ETL Pipeline completed for job: {job_name} in {total_duration:.2f} seconds, "

@@ -13,10 +13,10 @@ from modules.schema_handler import fetch_table_updated_at, fetch_table_schema, t
 from logs.etl_logger import setup_logger, track_performance, run_etl_pipeline
 
 # Setup job details
-job_name = "daily_gc_custinvoicejour"
-file_key = "custinvoicejour"
+job_name = "daily_SRC_salesline"
+file_key = "salesline"
 database_name = "prod_source"
-table_name = "custinvoicejour"
+table_name = "salesline"
 query_type = "INSERT"
 
 # Load configuration

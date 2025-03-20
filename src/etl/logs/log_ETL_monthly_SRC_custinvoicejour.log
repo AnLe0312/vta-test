@@ -1,0 +1,34 @@
+2025-03-20 15:08:08,577 [INFO] ETL Pipeline started for job: monthly_SRC_custinvoicejour
+2025-03-20 15:08:08,577 [INFO] Starting Extract
+2025-03-20 15:08:08,646 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-20 15:08:17,859 [INFO] Extracted 146623 records from GCS.
+2025-03-20 15:08:17,892 [INFO] Completed Extract in 9.31 seconds, memory used: 607.98 MB, CPU used: 16.40%
+2025-03-20 15:08:17,892 [INFO] Starting Transform
+2025-03-20 15:08:22,378 [INFO] Transformed 146623 records.
+2025-03-20 15:08:22,378 [INFO] Completed Transform in 4.49 seconds, memory used: 218.53 MB, CPU used: 12.00%
+2025-03-20 15:08:22,416 [INFO] Starting Load
+2025-03-20 15:08:53,359 [INFO] Loading 146623 records into prod_source.custinvoicejour.
+2025-03-20 15:08:55,373 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-20 15:08:55,816 [DEBUG] 📝 Parsed data rows count: 146623
+2025-03-20 15:09:11,569 [DEBUG] ✔️ Valid rows count: 146623
+2025-03-20 15:09:13,976 [DEBUG] 🚀 Starting batch insert: 146623 rows to insert.
+2025-03-20 15:09:18,905 [INFO] ✅ Batch 1/15 inserted successfully in 4.65s
+2025-03-20 15:09:22,729 [INFO] ✅ Batch 2/15 inserted successfully in 3.50s
+2025-03-20 15:09:26,272 [INFO] ✅ Batch 3/15 inserted successfully in 3.26s
+2025-03-20 15:09:29,945 [INFO] ✅ Batch 4/15 inserted successfully in 3.38s
+2025-03-20 15:09:33,609 [INFO] ✅ Batch 5/15 inserted successfully in 3.37s
+2025-03-20 15:09:37,153 [INFO] ✅ Batch 6/15 inserted successfully in 3.27s
+2025-03-20 15:09:41,062 [INFO] ✅ Batch 7/15 inserted successfully in 3.63s
+2025-03-20 15:09:44,856 [INFO] ✅ Batch 8/15 inserted successfully in 3.53s
+2025-03-20 15:09:48,833 [INFO] ✅ Batch 9/15 inserted successfully in 3.71s
+2025-03-20 15:09:53,642 [INFO] ✅ Batch 10/15 inserted successfully in 4.52s
+2025-03-20 15:10:00,675 [INFO] ✅ Batch 11/15 inserted successfully in 6.31s
+2025-03-20 15:10:07,961 [INFO] ✅ Batch 12/15 inserted successfully in 6.55s
+2025-03-20 15:10:15,129 [INFO] ✅ Batch 13/15 inserted successfully in 6.43s
+2025-03-20 15:10:22,403 [INFO] ✅ Batch 14/15 inserted successfully in 6.54s
+2025-03-20 15:10:27,822 [INFO] ✅ Batch 15/15 inserted successfully in 4.69s
+2025-03-20 15:10:27,837 [INFO] ✅ Insert completed: 146623 rows in 73.86s
+2025-03-20 15:10:27,839 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour FINAL
+2025-03-20 15:10:29,253 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-20 15:10:29,320 [INFO] Completed Load in 126.90 seconds, memory used: -1.85 MB, CPU used: -10.10%
+2025-03-20 15:10:29,322 [INFO] ETL Pipeline completed for job: monthly_SRC_custinvoicejour in 140.74 seconds, total memory used: 824.72 MB, total CPU used: 0.00%

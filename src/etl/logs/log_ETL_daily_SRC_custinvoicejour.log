@@ -1,0 +1,348 @@
+2025-03-20 09:21:48,381 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-20 09:21:48,381 [INFO] Starting Extract
+2025-03-20 09:21:49,237 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-20 09:21:58,453 [INFO] Extracted 146623 records from GCS.
+2025-03-20 09:21:58,480 [INFO] Completed Extract in 10.10 seconds, memory used: 587.25 MB, CPU used: 17.00%
+2025-03-20 09:21:58,480 [INFO] Starting Transform
+2025-03-20 09:22:03,685 [INFO] Transformed 3 records.
+2025-03-20 09:22:03,686 [INFO] Completed Transform in 5.21 seconds, memory used: 217.89 MB, CPU used: 20.90%
+2025-03-20 09:22:03,716 [INFO] Starting Load
+2025-03-20 09:22:03,719 [INFO] Loading 3 records into prod_source.custinvoicejour.
+2025-03-20 09:22:05,814 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-20 09:22:05,816 [INFO] Completed Load in 2.10 seconds, memory used: 0.13 MB, CPU used: -16.30%
+2025-03-20 09:22:05,817 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 17.43 seconds, total memory used: 805.27 MB, total CPU used: -16.70%
+2025-03-20 15:05:35,812 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-20 15:05:35,812 [INFO] Starting Extract
+2025-03-20 15:05:35,829 [ERROR] Error in Extract (Attempt 1/3): Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_custinvoicejour.py", line 36, in extract
+    df = read_gcs_file(bucket_name, file_path)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\gcs_handler.py", line 22, in read_gcs_file
+    return pd.read_parquet(blob.open("rb"))
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 651, in read_parquet
+    impl = get_engine(engine)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-03-20 15:05:35,829 [WARNING] Retrying Extract in 2 seconds...
+2025-03-20 15:05:37,844 [ERROR] Error in Extract (Attempt 2/3): Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_custinvoicejour.py", line 36, in extract
+    df = read_gcs_file(bucket_name, file_path)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\gcs_handler.py", line 22, in read_gcs_file
+    return pd.read_parquet(blob.open("rb"))
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 651, in read_parquet
+    impl = get_engine(engine)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-03-20 15:05:37,853 [WARNING] Retrying Extract in 4 seconds...
+2025-03-20 15:05:41,858 [ERROR] Error in Extract (Attempt 3/3): Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_custinvoicejour.py", line 36, in extract
+    df = read_gcs_file(bucket_name, file_path)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\gcs_handler.py", line 22, in read_gcs_file
+    return pd.read_parquet(blob.open("rb"))
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 651, in read_parquet
+    impl = get_engine(engine)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-03-20 15:05:41,874 [CRITICAL] Failed Extract after 3 attempts.
+2025-03-20 15:05:41,874 [CRITICAL] ETL Pipeline failed for job: daily_SRC_custinvoicejour — Error: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 143, in run_etl_pipeline
+    data = extract(logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_custinvoicejour.py", line 36, in extract
+    df = read_gcs_file(bucket_name, file_path)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\gcs_handler.py", line 22, in read_gcs_file
+    return pd.read_parquet(blob.open("rb"))
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 651, in read_parquet
+    impl = get_engine(engine)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parquet.py", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-03-20 15:06:55,619 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-20 15:06:55,619 [INFO] Starting Extract
+2025-03-20 15:06:56,923 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-20 15:07:32,829 [INFO] Skipping processing of raw/CUSTINVOICEJOUR.parquet. The file is not newer than the table.
+2025-03-20 15:07:32,891 [INFO] Completed Extract in 37.27 seconds, memory used: 373.64 MB, CPU used: 7.90%
+2025-03-20 15:07:32,891 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 37.27 seconds, total memory used: 373.70 MB, total CPU used: 0.00%
+2025-03-20 15:38:47,215 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-20 15:38:49,236 [INFO] Starting Extract
+2025-03-20 15:38:49,402 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-20 15:38:59,163 [INFO] Extracted 146623 records from GCS.
+2025-03-20 15:38:59,189 [INFO] Completed Extract in 9.95 seconds, memory used: 564.63 MB, CPU used: 11.80%
+2025-03-20 15:38:59,189 [INFO] Starting Transform
+2025-03-20 15:39:03,658 [INFO] Transformed 146623 records.
+2025-03-20 15:39:03,658 [INFO] Completed Transform in 4.47 seconds, memory used: 218.47 MB, CPU used: 18.00%
+2025-03-20 15:39:03,658 [INFO] Starting Load
+2025-03-20 15:39:33,408 [INFO] Loading 146623 records into prod_source.custinvoicejour.
+2025-03-20 15:39:35,329 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-20 15:39:35,818 [DEBUG] 📝 Parsed data rows count: 146623
+2025-03-20 15:40:10,784 [DEBUG] ✔️ Valid rows count: 146623
+2025-03-20 15:40:13,168 [DEBUG] 🚀 Starting batch insert: 146623 rows to insert.
+2025-03-20 15:40:22,959 [INFO] ✅ Batch 1/15 inserted successfully in 9.50s
+2025-03-20 15:40:29,022 [INFO] ✅ Batch 2/15 inserted successfully in 5.77s
+2025-03-20 15:40:35,079 [INFO] ✅ Batch 3/15 inserted successfully in 5.77s
+2025-03-20 15:40:41,057 [INFO] ✅ Batch 4/15 inserted successfully in 5.70s
+2025-03-20 15:40:46,849 [INFO] ✅ Batch 5/15 inserted successfully in 5.54s
+2025-03-20 15:40:52,525 [INFO] ✅ Batch 6/15 inserted successfully in 5.43s
+2025-03-20 15:40:58,096 [INFO] ✅ Batch 7/15 inserted successfully in 5.32s
+2025-03-20 15:41:03,690 [INFO] ✅ Batch 8/15 inserted successfully in 5.34s
+2025-03-20 15:41:14,943 [WARNING] Unexpected Http Driver Exception
+2025-03-20 15:41:14,943 [ERROR] ❌ Query execution failed: Error ('Connection aborted.', timeout('The write operation timed out')) executing HTTP request attempt 1 (https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443)
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connection.py", line 459, in request
+    self.send(chunk)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1001, in send
+    self.sock.sendall(data)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1204, in sendall
+    v = self.send(byte_view[count:])
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1173, in send
+    return self._sslobj.write(data)
+socket.timeout: The write operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 449, in _raw_request
+    response = self.http.request(method, url, **kwargs)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connection.py", line 459, in request
+    self.send(chunk)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1001, in send
+    self.sock.sendall(data)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1204, in sendall
+    v = self.send(byte_view[count:])
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1173, in send
+    return self._sslobj.write(data)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', timeout('The write operation timed out'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 461, in _raw_request
+    raise OperationalError(f'Error {ex} executing HTTP request attempt {attempts}{err_url}') from ex
+clickhouse_connect.driver.exceptions.OperationalError: Error ('Connection aborted.', timeout('The write operation timed out')) executing HTTP request attempt 1 (https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443)
+2025-03-20 15:41:15,020 [ERROR] ❌ Error generating query: Error ('Connection aborted.', timeout('The write operation timed out')) executing HTTP request attempt 1 (https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443)
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connection.py", line 459, in request
+    self.send(chunk)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1001, in send
+    self.sock.sendall(data)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1204, in sendall
+    v = self.send(byte_view[count:])
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1173, in send
+    return self._sslobj.write(data)
+socket.timeout: The write operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 449, in _raw_request
+    response = self.http.request(method, url, **kwargs)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connection.py", line 459, in request
+    self.send(chunk)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1001, in send
+    self.sock.sendall(data)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1204, in sendall
+    v = self.send(byte_view[count:])
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1173, in send
+    return self._sslobj.write(data)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', timeout('The write operation timed out'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 461, in _raw_request
+    raise OperationalError(f'Error {ex} executing HTTP request attempt {attempts}{err_url}') from ex
+clickhouse_connect.driver.exceptions.OperationalError: Error ('Connection aborted.', timeout('The write operation timed out')) executing HTTP request attempt 1 (https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443)
+2025-03-20 15:41:15,037 [ERROR] Error in Load (Attempt 1/3): Error ('Connection aborted.', timeout('The write operation timed out')) executing HTTP request attempt 1 (https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443)
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connection.py", line 459, in request
+    self.send(chunk)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1001, in send
+    self.sock.sendall(data)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1204, in sendall
+    v = self.send(byte_view[count:])
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1173, in send
+    return self._sslobj.write(data)
+socket.timeout: The write operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 449, in _raw_request
+    response = self.http.request(method, url, **kwargs)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\urllib3\connection.py", line 459, in request
+    self.send(chunk)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1001, in send
+    self.sock.sendall(data)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1204, in sendall
+    v = self.send(byte_view[count:])
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1173, in send
+    return self._sslobj.write(data)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', timeout('The write operation timed out'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_custinvoicejour.py", line 74, in load
+    query = generate_query(query_type=query_type, database_name=database_name, table=table_name, data=prepared_data, interval='12 DAY', logger=logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 461, in _raw_request
+    raise OperationalError(f'Error {ex} executing HTTP request attempt {attempts}{err_url}') from ex
+clickhouse_connect.driver.exceptions.OperationalError: Error ('Connection aborted.', timeout('The write operation timed out')) executing HTTP request attempt 1 (https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443)
+2025-03-20 15:41:15,044 [WARNING] Retrying Load in 2 seconds...
+2025-03-20 15:41:47,407 [INFO] Loading 146623 records into prod_source.custinvoicejour.
+2025-03-20 15:41:49,441 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-20 15:41:49,919 [DEBUG] 📝 Parsed data rows count: 146623
+2025-03-20 15:42:06,699 [DEBUG] ✔️ Valid rows count: 146623
+2025-03-20 15:42:09,085 [DEBUG] 🚀 Starting batch insert: 146623 rows to insert.
+2025-03-20 15:42:14,172 [INFO] ✅ Batch 1/15 inserted successfully in 4.81s
+2025-03-20 15:42:18,175 [INFO] ✅ Batch 2/15 inserted successfully in 3.70s
+2025-03-20 15:42:21,960 [INFO] ✅ Batch 3/15 inserted successfully in 3.54s
+2025-03-20 15:42:25,888 [INFO] ✅ Batch 4/15 inserted successfully in 3.67s
+2025-03-20 15:42:29,884 [INFO] ✅ Batch 5/15 inserted successfully in 3.74s
+2025-03-20 15:42:33,707 [INFO] ✅ Batch 6/15 inserted successfully in 3.57s
+2025-03-20 15:42:37,589 [INFO] ✅ Batch 7/15 inserted successfully in 3.64s
+2025-03-20 15:42:41,383 [INFO] ✅ Batch 8/15 inserted successfully in 3.54s
+2025-03-20 15:42:45,214 [INFO] ✅ Batch 9/15 inserted successfully in 3.58s
+2025-03-20 15:42:49,104 [INFO] ✅ Batch 10/15 inserted successfully in 3.63s
+2025-03-20 15:42:52,957 [INFO] ✅ Batch 11/15 inserted successfully in 3.60s
+2025-03-20 15:42:57,325 [INFO] ✅ Batch 12/15 inserted successfully in 4.12s
+2025-03-20 15:43:01,240 [INFO] ✅ Batch 13/15 inserted successfully in 3.67s
+2025-03-20 15:43:05,335 [INFO] ✅ Batch 14/15 inserted successfully in 3.86s
+2025-03-20 15:43:08,327 [INFO] ✅ Batch 15/15 inserted successfully in 2.74s
+2025-03-20 15:43:08,327 [INFO] ✅ Insert completed: 146623 rows in 59.24s
+2025-03-20 15:43:08,332 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour FINAL
+2025-03-20 15:43:09,042 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-20 15:43:09,071 [INFO] Completed Load in 245.41 seconds, memory used: 4.86 MB, CPU used: 12.20%
+2025-03-20 15:43:10,079 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 261.86 seconds, total memory used: 787.96 MB, total CPU used: 13.75%
