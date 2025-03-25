@@ -50,6 +50,7 @@ def extract(logger):
     logger.info(f"Skipping processing of {file_path}. The file is not newer than the table.")
     return None
 
+
 @track_performance("Transform", retries=3, backoff=2)
 def transform(data, logger):
     """Transform data according to table schema."""
