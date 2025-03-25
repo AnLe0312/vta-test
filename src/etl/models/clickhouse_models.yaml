@@ -7,12 +7,14 @@ clickhouse:
           table_name: "salesline"
           engine: "ReplacingMergeTree"
           order_by: ["RECID", "CREATEDDATETIME"]
+          partition_by: "CREATEDDATETIME"
           primary_key: "RECID"
 
         custinvoicejour:
           table_name: "custinvoicejour"
           engine: "ReplacingMergeTree"
           order_by: ["RECID", "INVOICEDATE"]
+          partition_by: "INVOICEDATE"
           primary_key: "RECID"
 
     prod_dwh: 
