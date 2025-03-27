@@ -1,0 +1,50 @@
+digraph ETL {
+    rankdir=TB
+    bgcolor="white"
+    node [shape=box style="rounded,filled" fillcolor="lightyellow" fontname="Arial" fontsize=10]
+
+    # Folder structure
+    etl [label="📁 etl/\nRoot ETL folder"]
+    models [label="📁 models/\nstorage_models.yaml\nclickhouse_models.yaml"]
+    logs [label="📁 logs/\netl_logger.py\nlog_ETL_*.log"]
+    modules [label="📁 modules/\nETL helper scripts"]
+
+    # Main runner and pipeline
+    main [label="main_ETL_runner.py\nMain ETL script"]
+    pipeline [label="run_etl_pipeline()\nControls Extract → Transform → Load"]
+
+    # ETL stages
+    extract [label="extract()\nRead & filter GCS data\nModule: gcs_handler.py"]
+    transform [label="transform()\nSchema mapping & cleaning\nModule: schema_handler.py"]
+    load [label="load()\nInsert into ClickHouse\nModules:\ndb_connector.py,\nprepare_sql_data.py,\ngenerate_query.py"]
+
+    # Internal modules
+    gcs [label="gcs_handler.py\n↳ Read file from GCS"]
+    schema [label="schema_handler.py\n↳ Fetch & map schema"]
+    db [label="db_connector.py\n↳ Connect to ClickHouse"]
+    prepare [label="prepare_sql_data.py\n↳ Prepare data for SQL"]
+    query [label="generate_query.py\n↳ Generate SQL"]
+    logger [label="etl_logger.py\n↳ Logging setup & tracking"]
+
+    # Connections
+    etl -> main
+    main -> pipeline
+
+    pipeline -> extract
+    pipeline -> transform
+    pipeline -> load
+
+    extract -> gcs
+    transform -> schema
+    load -> db
+    load -> prepare
+    load -> query
+    
+
+    etl -> models
+    etl -> logs
+    etl -> modules
+
+    logs -> logger
+    pipeline -> logger
+}
