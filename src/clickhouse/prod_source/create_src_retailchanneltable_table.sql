@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS prod_source.retailchanneltable (
    RETAILREQPLANIDSCHED	String,
    SQLSERVERNAME	String,
    DATABASENAME	String,
-   USERNAME	string,
+   USERNAME	String,
    PASSWORD	String,
    POITEMFILTER	Int64,
    HIDETRAININGMODE	Int64,
