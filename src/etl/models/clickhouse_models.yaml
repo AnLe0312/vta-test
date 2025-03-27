@@ -10,8 +10,22 @@ clickhouse:
           partition_by: "CREATEDDATETIME"
           primary_key: "RECID"
 
+        custtable:
+          table_name: "custtable"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "CREATEDDATETIME"]
+          partition_by: "CREATEDDATETIME"
+          primary_key: "RECID"
+
         custinvoicejour:
           table_name: "custinvoicejour"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "INVOICEDATE"]
+          partition_by: "INVOICEDATE"
+          primary_key: "RECID"
+
+        custinvoicetrans:
+          table_name: "custinvoicetrans"
           engine: "ReplacingMergeTree"
           order_by: ["RECID", "INVOICEDATE"]
           partition_by: "INVOICEDATE"
@@ -22,6 +36,41 @@ clickhouse:
           engine: "ReplacingMergeTree"
           order_by: ["RECID", "TRANSDATE"]
           partition_by: "TRANSDATE"
+          primary_key: "RECID"
+
+        retailtransactionsalestrans:
+          table_name: "retailtransactionsalestrans"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "TRANSDATE"]
+          partition_by: "TRANSDATE"
+          primary_key: "RECID"
+
+        retailtransactionpaymenttrans:
+          table_name: "retailtransactionpaymenttrans"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "TRANSDATE"]
+          partition_by: "TRANSDATE"
+          primary_key: "RECID"
+
+        retailtransactiondiscounttrans:
+          table_name: "retailtransactiondiscounttrans"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "MODIFIEDDATETIME"]
+          partition_by: "MODIFIEDDATETIME"
+          primary_key: "RECID"
+
+        retailchanneltable:
+          table_name: "retailchanneltable"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "CREATEDDATETIME"]
+          partition_by: "CREATEDDATETIME"
+          primary_key: "RECID"
+
+        retailtendertypetable:
+          table_name: "retailtendertypetable"
+          engine: "ReplacingMergeTree"
+          order_by: ["RECID", "CREATEDDATETIME"]
+          partition_by: "CREATEDDATETIME"
           primary_key: "RECID"
 
         vtasalestable:

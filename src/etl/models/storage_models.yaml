@@ -2,10 +2,13 @@ gcs:
   bucket_name: "data-lake-vta-test"
   files:
     retailtransactiontable: "raw/RETAILTRANSACTIONTABLE.parquet"
+    retailtransactionsalestrans: "raw/RETAILTRANSACTIONSALESTRANS.parquet"
     retailtransactiondiscounttrans: "raw/RETAILTRANSACTIONDISCOUNTTR.parquet"
     retailtransactionpaymenttrans: "raw/RETAILTRANSACTIONPAYMENTTRANS.parquet"
+    retailchanneltable: "raw/RETAILCHANNELTABLE.parquet"
     retailtendertypetable: "raw/RETAILTENDERTYPETABLE.parquet"
     salesline: "raw/SALESLINE.parquet"
     custtable: "raw/CUSTTABLE.parquet"
     custinvoicejour: "raw/CUSTINVOICEJOUR.parquet"
+    custinvoicetrans: "raw/CUSTINVOICETRANS.parquet"
     inventtrans: "raw/INVENTTRANS.parquet"
