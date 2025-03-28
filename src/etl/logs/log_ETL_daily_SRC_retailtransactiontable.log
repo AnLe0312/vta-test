@@ -1,0 +1,48 @@
+2025-03-28 09:43:22,158 [INFO] ETL Pipeline started for job: daily_SRC_retailtransactiontable
+2025-03-28 09:43:24,170 [INFO] Starting Extract
+2025-03-28 09:43:25,139 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-28 09:44:01,655 [INFO] Extracted 289586 records from GCS.
+2025-03-28 09:44:01,696 [INFO] Completed Extract in 37.53 seconds, memory used: 616.66 MB, CPU used: 2.20%
+2025-03-28 09:44:01,696 [INFO] Starting Transform
+2025-03-28 09:44:07,211 [INFO] Transformed 289586 records.
+2025-03-28 09:44:07,211 [INFO] Completed Transform in 5.51 seconds, memory used: 277.46 MB, CPU used: 10.40%
+2025-03-28 09:44:07,252 [INFO] Starting Load
+2025-03-28 09:45:00,842 [INFO] Loading 289586 records into prod_source.retailtransactiontable.
+2025-03-28 09:45:03,186 [DEBUG] 🔑 Primary key for prod_source.retailtransactiontable: RECID
+2025-03-28 09:45:03,683 [DEBUG] 📝 Parsed data rows count: 289586
+2025-03-28 09:45:24,771 [DEBUG] ✔️ Valid rows count: 289586
+2025-03-28 09:45:28,280 [DEBUG] 🚀 Starting batch insert: 289586 rows to insert.
+2025-03-28 09:45:32,907 [INFO] ✅ Batch 1/29 inserted successfully in 4.17s
+2025-03-28 09:45:36,290 [INFO] ✅ Batch 2/29 inserted successfully in 3.03s
+2025-03-28 09:45:39,473 [INFO] ✅ Batch 3/29 inserted successfully in 2.84s
+2025-03-28 09:45:42,752 [INFO] ✅ Batch 4/29 inserted successfully in 2.93s
+2025-03-28 09:45:46,231 [INFO] ✅ Batch 5/29 inserted successfully in 3.15s
+2025-03-28 09:45:49,404 [INFO] ✅ Batch 6/29 inserted successfully in 2.88s
+2025-03-28 09:45:52,567 [INFO] ✅ Batch 7/29 inserted successfully in 2.86s
+2025-03-28 09:45:55,740 [INFO] ✅ Batch 8/29 inserted successfully in 2.87s
+2025-03-28 09:45:58,811 [INFO] ✅ Batch 9/29 inserted successfully in 2.77s
+2025-03-28 09:46:02,093 [INFO] ✅ Batch 10/29 inserted successfully in 2.97s
+2025-03-28 09:46:05,483 [INFO] ✅ Batch 11/29 inserted successfully in 3.09s
+2025-03-28 09:46:08,851 [INFO] ✅ Batch 12/29 inserted successfully in 3.07s
+2025-03-28 09:46:12,076 [INFO] ✅ Batch 13/29 inserted successfully in 2.93s
+2025-03-28 09:46:15,297 [INFO] ✅ Batch 14/29 inserted successfully in 2.92s
+2025-03-28 09:46:18,996 [INFO] ✅ Batch 15/29 inserted successfully in 3.39s
+2025-03-28 09:46:22,478 [INFO] ✅ Batch 16/29 inserted successfully in 3.18s
+2025-03-28 09:46:25,851 [INFO] ✅ Batch 17/29 inserted successfully in 3.08s
+2025-03-28 09:46:29,231 [INFO] ✅ Batch 18/29 inserted successfully in 3.08s
+2025-03-28 09:46:32,499 [INFO] ✅ Batch 19/29 inserted successfully in 2.97s
+2025-03-28 09:46:35,791 [INFO] ✅ Batch 20/29 inserted successfully in 2.99s
+2025-03-28 09:46:39,068 [INFO] ✅ Batch 21/29 inserted successfully in 2.98s
+2025-03-28 09:46:42,649 [INFO] ✅ Batch 22/29 inserted successfully in 3.29s
+2025-03-28 09:46:45,872 [INFO] ✅ Batch 23/29 inserted successfully in 2.93s
+2025-03-28 09:46:49,202 [INFO] ✅ Batch 24/29 inserted successfully in 3.04s
+2025-03-28 09:46:52,477 [INFO] ✅ Batch 25/29 inserted successfully in 2.99s
+2025-03-28 09:46:55,655 [INFO] ✅ Batch 26/29 inserted successfully in 2.88s
+2025-03-28 09:46:59,337 [INFO] ✅ Batch 27/29 inserted successfully in 3.38s
+2025-03-28 09:47:02,721 [INFO] ✅ Batch 28/29 inserted successfully in 3.08s
+2025-03-28 09:47:05,985 [INFO] ✅ Batch 29/29 inserted successfully in 2.98s
+2025-03-28 09:47:05,985 [INFO] ✅ Insert completed: 289586 rows in 97.71s
+2025-03-28 09:47:06,001 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.retailtransactiontable FINAL
+2025-03-28 09:47:07,188 [INFO] Query of type 'INSERT' for table prod_source.retailtransactiontable has been generated.
+2025-03-28 09:47:07,198 [INFO] Completed Load in 179.95 seconds, memory used: -4.67 MB, CPU used: 0.10%
+2025-03-28 09:47:08,203 [INFO] ETL Pipeline completed for job: daily_SRC_retailtransactiontable in 225.04 seconds, total memory used: 889.45 MB, total CPU used: 4.30%
