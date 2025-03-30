@@ -1,0 +1,255 @@
+2025-03-30 13:28:08,879 [INFO] ETL Pipeline started for job: daily_SRC_retailchanneltable
+2025-03-30 13:28:10,915 [INFO] Starting Extract
+2025-03-30 13:28:11,721 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-30 13:28:16,734 [INFO] Extracted 566 records from GCS.
+2025-03-30 13:28:16,734 [INFO] Completed Extract in 5.82 seconds, memory used: 20.87 MB, CPU used: 6.20%
+2025-03-30 13:28:16,734 [INFO] Starting Transform
+2025-03-30 13:28:18,285 [WARNING] Column 'YVS_EINVOICEPOS' is missing from the ClickHouse schema and will be skipped.
+2025-03-30 13:28:18,285 [WARNING] Column 'VTAALLOCATIONCLASSIFICATION' is missing from the ClickHouse schema and will be skipped.
+2025-03-30 13:28:18,331 [INFO] Transformed 566 records.
+2025-03-30 13:28:18,331 [INFO] Completed Transform in 1.60 seconds, memory used: 0.61 MB, CPU used: 4.00%
+2025-03-30 13:28:18,332 [INFO] Starting Load
+2025-03-30 13:28:18,452 [INFO] Loading 566 records into prod_source.retailchanneltable.
+2025-03-30 13:28:20,030 [DEBUG] 🔑 Primary key for prod_source.retailchanneltable: RECID
+2025-03-30 13:28:20,030 [DEBUG] 📝 Parsed data rows count: 566
+2025-03-30 13:28:20,085 [DEBUG] ✔️ Valid rows count: 566
+2025-03-30 13:28:20,093 [DEBUG] 🚀 Starting batch insert: 566 rows to insert.
+2025-03-30 13:28:21,402 [ERROR] ❌ Query execution failed: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:21,448 [ERROR] ❌ Error generating query: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:21,464 [ERROR] Error in Load (Attempt 1/3): HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_retailchanneltable.py", line 75, in load
+    query = generate_query(query_type=query_type, database_name=database_name, table=table_name, data=prepared_data, interval='12 DAY', logger=logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:21,470 [WARNING] Retrying Load in 2 seconds...
+2025-03-30 13:28:23,608 [INFO] Loading 566 records into prod_source.retailchanneltable.
+2025-03-30 13:28:25,320 [DEBUG] 🔑 Primary key for prod_source.retailchanneltable: RECID
+2025-03-30 13:28:25,320 [DEBUG] 📝 Parsed data rows count: 566
+2025-03-30 13:28:25,370 [DEBUG] ✔️ Valid rows count: 566
+2025-03-30 13:28:25,387 [DEBUG] 🚀 Starting batch insert: 566 rows to insert.
+2025-03-30 13:28:25,906 [ERROR] ❌ Query execution failed: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:25,906 [ERROR] ❌ Error generating query: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:25,921 [ERROR] Error in Load (Attempt 2/3): HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_retailchanneltable.py", line 75, in load
+    query = generate_query(query_type=query_type, database_name=database_name, table=table_name, data=prepared_data, interval='12 DAY', logger=logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:25,932 [WARNING] Retrying Load in 4 seconds...
+2025-03-30 13:28:30,070 [INFO] Loading 566 records into prod_source.retailchanneltable.
+2025-03-30 13:28:31,554 [DEBUG] 🔑 Primary key for prod_source.retailchanneltable: RECID
+2025-03-30 13:28:31,554 [DEBUG] 📝 Parsed data rows count: 566
+2025-03-30 13:28:31,623 [DEBUG] ✔️ Valid rows count: 566
+2025-03-30 13:28:31,639 [DEBUG] 🚀 Starting batch insert: 566 rows to insert.
+2025-03-30 13:28:32,049 [ERROR] ❌ Query execution failed: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:32,049 [ERROR] ❌ Error generating query: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:32,068 [ERROR] Error in Load (Attempt 3/3): HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_retailchanneltable.py", line 75, in load
+    query = generate_query(query_type=query_type, database_name=database_name, table=table_name, data=prepared_data, interval='12 DAY', logger=logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+
+2025-03-30 13:28:32,076 [CRITICAL] Failed Load after 3 attempts.
+2025-03-30 13:28:32,076 [CRITICAL] ETL Pipeline failed for job: daily_SRC_retailchanneltable — Error: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+Traceback (most recent call last):
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 151, in run_etl_pipeline
+    load(transformed_data, logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\logs\etl_logger.py", line 88, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\daily_ETL_src_retailchanneltable.py", line 75, in load
+    query = generate_query(query_type=query_type, database_name=database_name, table=table_name, data=prepared_data, interval='12 DAY', logger=logger)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 179, in generate_query
+    insert_in_batches(new_data_string, client, database_name, table, col_names_str)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 92, in insert_in_batches
+    execute_with_retries(batch_insert_query, client)
+  File "c:\Users\PC\Work\VTA\GitAn\vta-test\src\etl\modules\generate_query.py", line 69, in execute_with_retries
+    client.query(query)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\client.py", line 228, in query
+    return self._query_with_context(query_context)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 239, in _query_with_context
+    response = self._raw_request(body,
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 474, in _raw_request
+    self._error_handler(response)
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\site-packages\clickhouse_connect\driver\httpclient.py", line 395, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://ofvssfn5dd.us-central1.gcp.clickhouse.cloud:8443 received ClickHouse error code 62
+ Code: 62. DB::Exception: Cannot parse expression of type DateTime here: 0.000000,0.000000,'2025-03-30 13:28:18'),
+('None',0.000000,0.000000,0.000000,'None','None','None','CHA074','',32400.000000,75600.000000,2.000000,1.000000,0.0000: While executing ValuesBlockInputFormat. (SYNTAX_ERROR) (version 24.10.1.11464 (official build))
+

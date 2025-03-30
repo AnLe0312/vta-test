@@ -19,15 +19,18 @@ database_name = "prod_source"
 table_name = "custinvoicejour"
 query_type = "INSERT"
 
+# Setup logger
+logger = setup_logger(job_name)
+
 # Load configuration
 with open(f'{current_path}/models/storage_models.yaml', "r") as f:
     config = yaml.safe_load(f)
 
 bucket_name = config["gcs"]["bucket_name"]
 file_path = config["gcs"]["files"].get(file_key)
-
-# Setup logger
-logger = setup_logger(job_name)
+if not file_path:
+    logger.critical(f"File path for key '{file_key}' not found in configuration.")
+    raise ValueError(f"Missing file path for key: {file_key}")
 
 
 @track_performance("Extract", retries=3, backoff=2)

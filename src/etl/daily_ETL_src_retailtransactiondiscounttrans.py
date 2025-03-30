@@ -13,10 +13,10 @@ from modules.schema_handler import fetch_table_updated_at, fetch_table_schema, t
 from logs.etl_logger import setup_logger, track_performance, run_etl_pipeline
 
 # Setup job details
-job_name = "daily_SRC_retailtransactionsalestrans"
-file_key = "retailtransactionsalestrans"
+job_name = "daily_SRC_retailtransactiondiscounttrans"
+file_key = "retailtransactiondiscounttrans"
 database_name = "prod_source"
-table_name = "retailtransactionsalestrans"
+table_name = "retailtransactiondiscounttrans"
 query_type = "INSERT"
 
 # Setup logger

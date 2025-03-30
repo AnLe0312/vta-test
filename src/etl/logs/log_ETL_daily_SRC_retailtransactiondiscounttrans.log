@@ -1,0 +1,30 @@
+2025-03-30 13:29:39,811 [INFO] ETL Pipeline started for job: daily_SRC_retailtransactiondiscounttrans
+2025-03-30 13:29:41,829 [INFO] Starting Extract
+2025-03-30 13:29:41,909 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-30 13:29:47,042 [INFO] Extracted 107531 records from GCS.
+2025-03-30 13:29:47,058 [INFO] Completed Extract in 5.23 seconds, memory used: 99.26 MB, CPU used: 5.90%
+2025-03-30 13:29:47,058 [INFO] Starting Transform
+2025-03-30 13:29:48,963 [INFO] Transformed 107531 records.
+2025-03-30 13:29:49,002 [INFO] Completed Transform in 1.94 seconds, memory used: 20.00 MB, CPU used: 8.00%
+2025-03-30 13:29:49,002 [INFO] Starting Load
+2025-03-30 13:29:56,870 [INFO] Loading 107531 records into prod_source.retailtransactiondiscounttrans.
+2025-03-30 13:29:58,193 [DEBUG] 🔑 Primary key for prod_source.retailtransactiondiscounttrans: RECID
+2025-03-30 13:29:58,240 [DEBUG] 📝 Parsed data rows count: 107531
+2025-03-30 13:30:00,503 [DEBUG] ✔️ Valid rows count: 107531
+2025-03-30 13:30:00,784 [DEBUG] 🚀 Starting batch insert: 107531 rows to insert.
+2025-03-30 13:30:02,571 [INFO] ✅ Batch 1/11 inserted successfully in 1.76s
+2025-03-30 13:30:03,706 [INFO] ✅ Batch 2/11 inserted successfully in 1.09s
+2025-03-30 13:30:04,730 [INFO] ✅ Batch 3/11 inserted successfully in 0.99s
+2025-03-30 13:30:05,708 [INFO] ✅ Batch 4/11 inserted successfully in 0.94s
+2025-03-30 13:30:06,776 [INFO] ✅ Batch 5/11 inserted successfully in 1.04s
+2025-03-30 13:30:07,804 [INFO] ✅ Batch 6/11 inserted successfully in 0.99s
+2025-03-30 13:30:08,928 [INFO] ✅ Batch 7/11 inserted successfully in 1.07s
+2025-03-30 13:30:09,951 [INFO] ✅ Batch 8/11 inserted successfully in 0.98s
+2025-03-30 13:30:10,977 [INFO] ✅ Batch 9/11 inserted successfully in 0.98s
+2025-03-30 13:30:11,999 [INFO] ✅ Batch 10/11 inserted successfully in 0.98s
+2025-03-30 13:30:13,023 [INFO] ✅ Batch 11/11 inserted successfully in 0.99s
+2025-03-30 13:30:13,023 [INFO] ✅ Insert completed: 107531 rows in 12.24s
+2025-03-30 13:30:13,023 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.retailtransactiondiscounttrans FINAL
+2025-03-30 13:30:13,355 [INFO] Query of type 'INSERT' for table prod_source.retailtransactiondiscounttrans has been generated.
+2025-03-30 13:30:13,371 [INFO] Completed Load in 24.37 seconds, memory used: 4.70 MB, CPU used: 9.70%
+2025-03-30 13:30:14,378 [INFO] ETL Pipeline completed for job: daily_SRC_retailtransactiondiscounttrans in 33.56 seconds, total memory used: 124.02 MB, total CPU used: 10.25%
