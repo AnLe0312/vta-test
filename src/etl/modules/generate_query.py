@@ -179,7 +179,7 @@ def generate_query(query_type, database_name, table, condition=None, data=None, 
             insert_in_batches(new_data_string, client, database_name, table, col_names_str)
 
             # Optional: Optimize the table after insert/update
-            optimize_query = f"OPTIMIZE TABLE {database_name}.{table} FINAL"
+            optimize_query = f"OPTIMIZE TABLE {database_name}.{table}"
             logger.debug(f"⚙️ Optimizing table with query: {optimize_query}")
             client.query(optimize_query)
 

@@ -48,15 +48,24 @@ def fetch_table_schema(database_name, table_name):
 # Transform DataFrame columns to match ClickHouse schema
 def transform_dataframe_to_schema(df, schema, logger=None):
     # Handle Date and DateTime columns to replace years in the 1900s (19xx) with NaT
+    missing_columns = []
+
     for col in df.columns:
         if col not in schema:
             logger.warning(f"Column '{col}' is missing from the ClickHouse schema and will be skipped.")
+            missing_columns.append(col)
             continue  # Skip the column if it's missing from the schema
         # If the column is Date or DateTime, replace dates with years in the 1900s (19xx) with None
         if df[col].dtype in ["datetime64[ns]", "datetime64[ns, UTC]"]:
             mask = df[col].dt.year < 2000
             df[col] = df[col].astype("object")  # Ensure object type for mixed values
             df.loc[mask, col] = None
+
+    # Remove missing columns from df
+    if missing_columns:
+        df = df.drop(columns=missing_columns)
+        if logger:
+            logger.info(f"Dropped {len(missing_columns)} column(s) not in schema: {missing_columns}")
 
     new_columns = {}
     # Transform DataFrame columns to match ClickHouse schema
@@ -93,6 +102,10 @@ def transform_dataframe_to_schema(df, schema, logger=None):
                 # For other missing columns, assign NaN if nullable or 0 if not nullable
                 new_columns[col] = [np.nan if nullable else 0] * len(df)
 
+            if logger:
+                logger.info(f"Added missing column '{col}' with default or null values.")
+            continue  # Không cần transform thêm
+
         # Skip the column if it was initialized in new_columns (since it doesn't exist in df)
         if col not in df.columns:
             continue
@@ -119,7 +132,15 @@ def transform_dataframe_to_schema(df, schema, logger=None):
         if nullable:
             df[col] = df[col].where(pd.notnull(df[col]), None)
 
-    df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+    if new_columns:
+        df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+
+    # Ensure the column order matches the schema
+    ordered_columns = [col for col in schema.keys() if col in df.columns]
+    df = df[ordered_columns]
+
+    if logger:
+        logger.info(f"Final DataFrame shape after schema transformation: {df.shape}")
 
     return df
 
