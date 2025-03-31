@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS prod_source.retailtransactionpaymenttrans (
    RECVERSION	Int64,
    PARTITION	UInt64,
    RECID	UInt64,
+   last_synced_at    DateTime,
    updated_at    DateTime DEFAULT now(),
    PRIMARY KEY (RECID)
 )

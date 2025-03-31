@@ -227,6 +227,7 @@ CREATE TABLE IF NOT EXISTS prod_source.custtable (
    BHX_TRIGGERUPDATETOKEN	Int64,
    VTVFIRSTRELATIONSHIPLOYALTYCARD	Int64,
    VTVSECONDRELATIONSHIPLOYALTYCARD	Int64,
+   last_synced_at               DateTime,
    updated_at      DateTime DEFAULT now(),
    PRIMARY KEY (RECID)
 )

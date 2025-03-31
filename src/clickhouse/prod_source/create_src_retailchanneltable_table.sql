@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS prod_source.retailchanneltable (
    VTASTORESIZE	Int64,
    VTAAREASALESMANAGER	String,
    VTASTOREMANAGER	String,
+   last_synced_at               DateTime,
    updated_at    DateTime DEFAULT now(),
    PRIMARY KEY (RECID)
 )

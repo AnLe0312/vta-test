@@ -346,3 +346,248 @@ clickhouse_connect.driver.exceptions.OperationalError: Error ('Connection aborte
 2025-03-20 15:43:09,042 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
 2025-03-20 15:43:09,071 [INFO] Completed Load in 245.41 seconds, memory used: 4.86 MB, CPU used: 12.20%
 2025-03-20 15:43:10,079 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 261.86 seconds, total memory used: 787.96 MB, total CPU used: 13.75%
+2025-03-31 11:21:08,547 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 11:21:10,567 [INFO] Starting Extract
+2025-03-31 11:21:11,422 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 11:22:24,519 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 11:22:26,532 [INFO] Starting Extract
+2025-03-31 11:22:26,605 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 11:22:34,101 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 11:22:36,452 [INFO] Extracted 146623 records from GCS.
+2025-03-31 11:22:36,483 [INFO] Completed Extract in 9.95 seconds, memory used: 566.50 MB, CPU used: 6.40%
+2025-03-31 11:22:36,483 [INFO] Starting Transform
+2025-03-31 11:22:40,486 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 11:22:40,486 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 11:22:41,138 [INFO] Final DataFrame shape after schema transformation: (146623, 146)
+2025-03-31 11:22:41,138 [INFO] Transformed 146623 records.
+2025-03-31 11:22:41,146 [INFO] Completed Transform in 4.66 seconds, memory used: 220.67 MB, CPU used: 10.30%
+2025-03-31 11:22:41,146 [INFO] Starting Load
+2025-03-31 11:22:41,358 [INFO] Loading 1000 records into prod_source.custinvoicejour.
+2025-03-31 11:22:43,095 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 11:22:43,095 [DEBUG] 📝 Parsed data rows count: 1000
+2025-03-31 11:22:43,200 [DEBUG] ✔️ Valid rows count: 1000
+2025-03-31 11:22:43,261 [DEBUG] 🚀 Starting batch insert: 1000 rows to insert.
+2025-03-31 11:22:44,710 [INFO] ✅ Batch 1/1 inserted successfully in 1.45s
+2025-03-31 11:22:44,710 [INFO] ✅ Insert completed: 1000 rows in 1.45s
+2025-03-31 11:22:44,710 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 11:22:45,011 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 11:22:48,287 [INFO] Updated last_modified = 1970-01-01 00:00:00 in table prod_source.custinvoicejour.
+2025-03-31 11:22:48,287 [INFO] Completed Load in 7.14 seconds, memory used: 0.36 MB, CPU used: 4.30%
+2025-03-31 11:22:49,295 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 23.77 seconds, total memory used: 787.54 MB, total CPU used: 2.20%
+2025-03-31 11:28:10,647 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 11:28:12,677 [INFO] Starting Extract
+2025-03-31 11:28:12,746 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 11:28:20,379 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 11:28:22,642 [INFO] Extracted 146623 records from GCS.
+2025-03-31 11:28:22,680 [INFO] Completed Extract in 10.00 seconds, memory used: 574.03 MB, CPU used: 16.50%
+2025-03-31 11:28:22,680 [INFO] Starting Transform
+2025-03-31 11:28:26,666 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 11:28:26,666 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 11:28:27,271 [INFO] Final DataFrame shape after schema transformation: (146623, 146)
+2025-03-31 11:28:27,271 [INFO] Transformed 146623 records.
+2025-03-31 11:28:27,271 [INFO] Completed Transform in 4.59 seconds, memory used: 220.59 MB, CPU used: 19.50%
+2025-03-31 11:28:27,278 [INFO] Starting Load
+2025-03-31 11:28:27,485 [INFO] Loading 1000 records into prod_source.custinvoicejour.
+2025-03-31 11:28:28,993 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 11:28:28,993 [DEBUG] 📝 Parsed data rows count: 1000
+2025-03-31 11:28:29,120 [DEBUG] ✔️ Valid rows count: 1000
+2025-03-31 11:28:29,133 [DEBUG] 🚀 Starting batch insert: 1000 rows to insert.
+2025-03-31 11:28:30,585 [INFO] ✅ Batch 1/1 inserted successfully in 1.45s
+2025-03-31 11:28:30,585 [INFO] ✅ Insert completed: 1000 rows in 1.45s
+2025-03-31 11:28:30,585 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 11:28:30,935 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 11:28:33,994 [INFO] Updated last_modified = 2025-02-01 18:44:41 in table prod_source.custinvoicejour.
+2025-03-31 11:28:33,994 [INFO] Completed Load in 6.72 seconds, memory used: 0.30 MB, CPU used: 14.30%
+2025-03-31 11:28:34,997 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 23.35 seconds, total memory used: 794.92 MB, total CPU used: 15.80%
+2025-03-31 11:29:30,471 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 11:29:32,488 [INFO] Starting Extract
+2025-03-31 11:29:32,561 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 11:29:40,120 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 11:29:42,609 [INFO] Extracted 145624 records from GCS.
+2025-03-31 11:29:42,641 [INFO] Completed Extract in 10.15 seconds, memory used: 549.19 MB, CPU used: 12.50%
+2025-03-31 11:29:42,641 [INFO] Starting Transform
+2025-03-31 11:29:46,987 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 11:29:46,987 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 11:29:47,579 [INFO] Final DataFrame shape after schema transformation: (145624, 146)
+2025-03-31 11:29:47,581 [INFO] Transformed 145624 records.
+2025-03-31 11:29:47,581 [INFO] Completed Transform in 4.94 seconds, memory used: 217.91 MB, CPU used: 14.40%
+2025-03-31 11:29:47,581 [INFO] Starting Load
+2025-03-31 11:30:16,668 [INFO] Loading 145624 records into prod_source.custinvoicejour.
+2025-03-31 11:30:18,500 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 11:30:18,937 [DEBUG] 📝 Parsed data rows count: 145624
+2025-03-31 11:30:34,422 [DEBUG] ✔️ Valid rows count: 145624
+2025-03-31 11:30:36,963 [DEBUG] 🚀 Starting batch insert: 145624 rows to insert.
+2025-03-31 11:30:42,305 [INFO] ✅ Batch 1/15 inserted successfully in 5.04s
+2025-03-31 11:30:46,622 [INFO] ✅ Batch 2/15 inserted successfully in 4.01s
+2025-03-31 11:30:50,812 [INFO] ✅ Batch 3/15 inserted successfully in 3.89s
+2025-03-31 11:30:55,006 [INFO] ✅ Batch 4/15 inserted successfully in 3.92s
+2025-03-31 11:30:58,999 [INFO] ✅ Batch 5/15 inserted successfully in 3.71s
+2025-03-31 11:31:03,524 [INFO] ✅ Batch 6/15 inserted successfully in 4.24s
+2025-03-31 11:31:07,505 [INFO] ✅ Batch 7/15 inserted successfully in 3.72s
+2025-03-31 11:31:12,313 [INFO] ✅ Batch 8/15 inserted successfully in 4.54s
+2025-03-31 11:31:16,721 [INFO] ✅ Batch 9/15 inserted successfully in 4.15s
+2025-03-31 11:31:21,009 [INFO] ✅ Batch 10/15 inserted successfully in 4.03s
+2025-03-31 11:31:24,805 [INFO] ✅ Batch 11/15 inserted successfully in 3.55s
+2025-03-31 11:31:29,038 [INFO] ✅ Batch 12/15 inserted successfully in 3.98s
+2025-03-31 11:31:33,519 [INFO] ✅ Batch 13/15 inserted successfully in 4.24s
+2025-03-31 11:31:38,013 [INFO] ✅ Batch 14/15 inserted successfully in 4.25s
+2025-03-31 11:31:40,779 [INFO] ✅ Batch 15/15 inserted successfully in 2.52s
+2025-03-31 11:31:40,779 [INFO] ✅ Insert completed: 145624 rows in 63.82s
+2025-03-31 11:31:40,784 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 11:31:41,490 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 11:31:44,967 [INFO] Updated last_modified = 2025-03-06 03:50:51 in table prod_source.custinvoicejour.
+2025-03-31 11:31:45,000 [INFO] Completed Load in 117.42 seconds, memory used: -0.25 MB, CPU used: 11.40%
+2025-03-31 11:31:46,016 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 134.53 seconds, total memory used: 766.85 MB, total CPU used: 14.40%
+2025-03-31 13:35:18,089 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 13:35:20,103 [INFO] Starting Extract
+2025-03-31 13:35:20,187 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 13:35:30,241 [INFO] Extracted 146623 records from GCS.
+2025-03-31 13:35:30,242 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 13:35:30,272 [INFO] Completed Extract in 10.17 seconds, memory used: 588.46 MB, CPU used: 8.70%
+2025-03-31 13:35:30,273 [INFO] Starting Transform
+2025-03-31 13:35:34,381 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 13:35:34,389 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 13:35:34,996 [INFO] Final DataFrame shape after schema transformation: (146623, 146)
+2025-03-31 13:35:35,000 [INFO] Transformed 146623 records.
+2025-03-31 13:35:35,000 [INFO] Completed Transform in 4.73 seconds, memory used: 221.19 MB, CPU used: 25.30%
+2025-03-31 13:35:35,000 [INFO] Starting Load
+2025-03-31 13:35:35,203 [INFO] Loading 1000 records into prod_source.custinvoicejour.
+2025-03-31 13:35:36,664 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 13:35:36,664 [DEBUG] 📝 Parsed data rows count: 1000
+2025-03-31 13:35:36,776 [DEBUG] ✔️ Valid rows count: 1000
+2025-03-31 13:35:36,795 [DEBUG] 🚀 Starting batch insert: 1000 rows to insert.
+2025-03-31 13:35:38,314 [INFO] ✅ Batch 1/1 inserted successfully in 1.52s
+2025-03-31 13:35:38,314 [INFO] ✅ Insert completed: 1000 rows in 1.52s
+2025-03-31 13:35:38,314 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 13:35:38,614 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 13:35:41,691 [INFO] Updated last_modified = 2025-02-01 18:44:41 for rows where MODIFIEDDATETIME BETWEEN None AND None in table prod_source.custinvoicejour.
+2025-03-31 13:35:41,691 [INFO] Completed Load in 6.69 seconds, memory used: -0.26 MB, CPU used: 15.00%
+2025-03-31 13:35:42,706 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 23.60 seconds, total memory used: 809.39 MB, total CPU used: 18.05%
+2025-03-31 13:40:13,672 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 13:40:15,689 [INFO] Starting Extract
+2025-03-31 13:40:15,763 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 13:40:24,768 [INFO] Extracted 146623 records from GCS.
+2025-03-31 13:40:24,770 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 13:40:24,796 [INFO] Completed Extract in 9.11 seconds, memory used: 590.11 MB, CPU used: 11.80%
+2025-03-31 13:40:24,801 [INFO] Starting Transform
+2025-03-31 13:40:28,720 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 13:40:28,720 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 13:40:29,327 [INFO] Final DataFrame shape after schema transformation: (146623, 146)
+2025-03-31 13:40:29,327 [INFO] Transformed 146623 records.
+2025-03-31 13:40:29,327 [INFO] Completed Transform in 4.53 seconds, memory used: 221.37 MB, CPU used: -19.20%
+2025-03-31 13:40:29,327 [INFO] Starting Load
+2025-03-31 13:40:29,533 [INFO] Loading 1000 records into prod_source.custinvoicejour.
+2025-03-31 13:40:31,047 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 13:40:31,047 [DEBUG] 📝 Parsed data rows count: 1000
+2025-03-31 13:40:31,158 [DEBUG] ✔️ Valid rows count: 1000
+2025-03-31 13:40:31,168 [DEBUG] 🚀 Starting batch insert: 1000 rows to insert.
+2025-03-31 13:40:32,582 [INFO] ✅ Batch 1/1 inserted successfully in 1.41s
+2025-03-31 13:40:32,582 [INFO] ✅ Insert completed: 1000 rows in 1.41s
+2025-03-31 13:40:32,582 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 13:40:32,834 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 13:40:35,941 [INFO] Updated last_modified = 2025-02-01 18:44:41 for rows where MODIFIEDDATETIME BETWEEN None AND None in table prod_source.custinvoicejour.
+2025-03-31 13:40:35,957 [INFO] Completed Load in 6.63 seconds, memory used: 0.41 MB, CPU used: 14.20%
+2025-03-31 13:40:36,960 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 22.28 seconds, total memory used: 811.89 MB, total CPU used: 19.10%
+2025-03-31 13:44:14,813 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 13:44:16,831 [INFO] Starting Extract
+2025-03-31 13:44:16,900 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 13:44:26,193 [INFO] Extracted 146623 records from GCS.
+2025-03-31 13:44:26,193 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 13:44:26,223 [INFO] Completed Extract in 9.39 seconds, memory used: 584.39 MB, CPU used: 11.00%
+2025-03-31 13:44:26,223 [INFO] Starting Transform
+2025-03-31 13:44:30,127 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 13:44:30,127 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 13:44:30,723 [INFO] Final DataFrame shape after schema transformation: (146623, 146)
+2025-03-31 13:44:30,725 [INFO] Transformed 146623 records.
+2025-03-31 13:44:30,725 [INFO] Completed Transform in 4.50 seconds, memory used: 221.16 MB, CPU used: 17.40%
+2025-03-31 13:44:30,725 [INFO] Starting Load
+2025-03-31 13:44:30,920 [INFO] Loading 1000 records into prod_source.custinvoicejour.
+2025-03-31 13:44:32,371 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 13:44:32,371 [DEBUG] 📝 Parsed data rows count: 1000
+2025-03-31 13:44:32,483 [DEBUG] ✔️ Valid rows count: 1000
+2025-03-31 13:44:32,502 [DEBUG] 🚀 Starting batch insert: 1000 rows to insert.
+2025-03-31 13:44:33,935 [INFO] ✅ Batch 1/1 inserted successfully in 1.43s
+2025-03-31 13:44:33,935 [INFO] ✅ Insert completed: 1000 rows in 1.43s
+2025-03-31 13:44:33,935 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 13:44:34,174 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 13:44:37,173 [INFO] Updated last_modified = 2025-02-01 18:44:41 for rows where MODIFIEDDATETIME BETWEEN 2025-02-01 16:06:28 AND 2025-03-06 03:50:51 in table prod_source.custinvoicejour.
+2025-03-31 13:44:37,173 [INFO] Completed Load in 6.45 seconds, memory used: 0.41 MB, CPU used: 15.00%
+2025-03-31 13:44:38,179 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 22.36 seconds, total memory used: 805.96 MB, total CPU used: 17.30%
+2025-03-31 13:45:23,162 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 13:45:25,182 [INFO] Starting Extract
+2025-03-31 13:45:25,270 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 13:45:35,717 [INFO] Extracted 145624 records from GCS.
+2025-03-31 13:45:35,723 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 18:44:41 → 2025-03-06 03:50:51
+2025-03-31 13:45:35,748 [INFO] Completed Extract in 10.57 seconds, memory used: 569.47 MB, CPU used: 8.20%
+2025-03-31 13:45:35,748 [INFO] Starting Transform
+2025-03-31 13:45:40,038 [INFO] Added missing column 'last_modified' with default or null values.
+2025-03-31 13:45:40,038 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 13:45:40,629 [INFO] Final DataFrame shape after schema transformation: (145624, 146)
+2025-03-31 13:45:40,629 [INFO] Transformed 145624 records.
+2025-03-31 13:45:40,629 [INFO] Completed Transform in 4.88 seconds, memory used: 218.02 MB, CPU used: 18.30%
+2025-03-31 13:45:40,629 [INFO] Starting Load
+2025-03-31 13:46:23,098 [INFO] Loading 145624 records into prod_source.custinvoicejour.
+2025-03-31 13:46:25,235 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 13:46:25,664 [DEBUG] 📝 Parsed data rows count: 145624
+2025-03-31 13:46:57,896 [DEBUG] ✔️ Valid rows count: 145624
+2025-03-31 13:47:03,094 [DEBUG] 🚀 Starting batch insert: 145624 rows to insert.
+2025-03-31 13:47:09,749 [INFO] ✅ Batch 1/15 inserted successfully in 6.14s
+2025-03-31 13:47:15,588 [INFO] ✅ Batch 2/15 inserted successfully in 5.28s
+2025-03-31 13:47:21,159 [INFO] ✅ Batch 3/15 inserted successfully in 5.01s
+2025-03-31 13:47:27,180 [INFO] ✅ Batch 4/15 inserted successfully in 5.48s
+2025-03-31 13:47:33,247 [INFO] ✅ Batch 5/15 inserted successfully in 5.32s
+2025-03-31 13:47:38,474 [INFO] ✅ Batch 6/15 inserted successfully in 4.77s
+2025-03-31 13:47:43,745 [INFO] ✅ Batch 7/15 inserted successfully in 4.80s
+2025-03-31 13:47:48,970 [INFO] ✅ Batch 8/15 inserted successfully in 4.75s
+2025-03-31 13:47:53,969 [INFO] ✅ Batch 9/15 inserted successfully in 4.54s
+2025-03-31 13:47:59,330 [INFO] ✅ Batch 10/15 inserted successfully in 4.89s
+2025-03-31 13:48:06,081 [INFO] ✅ Batch 11/15 inserted successfully in 6.29s
+2025-03-31 13:48:10,692 [INFO] ✅ Batch 12/15 inserted successfully in 4.13s
+2025-03-31 13:48:14,406 [INFO] ✅ Batch 13/15 inserted successfully in 3.49s
+2025-03-31 13:48:18,185 [INFO] ✅ Batch 14/15 inserted successfully in 3.59s
+2025-03-31 13:48:20,586 [INFO] ✅ Batch 15/15 inserted successfully in 2.18s
+2025-03-31 13:48:20,588 [INFO] ✅ Insert completed: 145624 rows in 77.49s
+2025-03-31 13:48:20,589 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 13:48:21,128 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 13:48:23,767 [INFO] Updated last_modified = 2025-03-06 03:50:51 for rows where MODIFIEDDATETIME BETWEEN 2025-02-01 18:44:41 AND 2025-03-06 03:50:51 in table prod_source.custinvoicejour.
+2025-03-31 13:48:23,785 [INFO] Completed Load in 163.16 seconds, memory used: -0.86 MB, CPU used: 15.40%
+2025-03-31 13:48:24,785 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 180.62 seconds, total memory used: 786.64 MB, total CPU used: 8.95%
+2025-03-31 14:18:20,903 [INFO] ETL Pipeline started for job: daily_SRC_custinvoicejour
+2025-03-31 14:18:22,922 [INFO] Starting Extract
+2025-03-31 14:18:23,747 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-03-31 14:18:32,446 [INFO] Extracted 146623 records from GCS.
+2025-03-31 14:18:32,447 [DEBUG] MODIFIEDDATETIME range in extracted data: 2025-02-01 16:06:28 → 2025-03-06 03:50:51
+2025-03-31 14:18:32,468 [INFO] Completed Extract in 9.55 seconds, memory used: 582.18 MB, CPU used: 6.60%
+2025-03-31 14:18:32,469 [INFO] Starting Transform
+2025-03-31 14:18:35,707 [INFO] Added missing column 'last_synced_at' with default or null values.
+2025-03-31 14:18:35,709 [INFO] Added missing column 'updated_at' with default or null values.
+2025-03-31 14:18:36,165 [INFO] Final DataFrame shape after schema transformation: (146623, 146)
+2025-03-31 14:18:36,167 [INFO] Transformed 146623 records.
+2025-03-31 14:18:36,167 [INFO] Completed Transform in 3.70 seconds, memory used: 220.59 MB, CPU used: 17.90%
+2025-03-31 14:18:36,167 [INFO] Starting Load
+2025-03-31 14:19:01,493 [INFO] Loading 146623 records into prod_source.custinvoicejour.
+2025-03-31 14:19:03,094 [DEBUG] 🔑 Primary key for prod_source.custinvoicejour: RECID
+2025-03-31 14:19:03,545 [DEBUG] 📝 Parsed data rows count: 146623
+2025-03-31 14:19:17,604 [DEBUG] ✔️ Valid rows count: 146623
+2025-03-31 14:19:19,843 [DEBUG] 🚀 Starting batch insert: 146623 rows to insert.
+2025-03-31 14:19:24,613 [INFO] ✅ Batch 1/15 inserted successfully in 4.53s
+2025-03-31 14:19:28,233 [INFO] ✅ Batch 2/15 inserted successfully in 3.41s
+2025-03-31 14:19:32,267 [INFO] ✅ Batch 3/15 inserted successfully in 3.80s
+2025-03-31 14:19:36,261 [INFO] ✅ Batch 4/15 inserted successfully in 3.75s
+2025-03-31 14:19:39,893 [INFO] ✅ Batch 5/15 inserted successfully in 3.44s
+2025-03-31 14:19:43,575 [INFO] ✅ Batch 6/15 inserted successfully in 3.48s
+2025-03-31 14:19:47,000 [INFO] ✅ Batch 7/15 inserted successfully in 3.23s
+2025-03-31 14:19:50,333 [INFO] ✅ Batch 8/15 inserted successfully in 3.17s
+2025-03-31 14:19:53,770 [INFO] ✅ Batch 9/15 inserted successfully in 3.26s
+2025-03-31 14:19:57,351 [INFO] ✅ Batch 10/15 inserted successfully in 3.40s
+2025-03-31 14:20:00,844 [INFO] ✅ Batch 11/15 inserted successfully in 3.31s
+2025-03-31 14:20:04,741 [INFO] ✅ Batch 12/15 inserted successfully in 3.70s
+2025-03-31 14:20:08,340 [INFO] ✅ Batch 13/15 inserted successfully in 3.43s
+2025-03-31 14:20:12,358 [INFO] ✅ Batch 14/15 inserted successfully in 3.83s
+2025-03-31 14:20:15,248 [INFO] ✅ Batch 15/15 inserted successfully in 2.72s
+2025-03-31 14:20:15,248 [INFO] ✅ Insert completed: 146623 rows in 55.41s
+2025-03-31 14:20:15,250 [DEBUG] ⚙️ Optimizing table with query: OPTIMIZE TABLE prod_source.custinvoicejour
+2025-03-31 14:20:15,814 [INFO] Query of type 'INSERT' for table prod_source.custinvoicejour has been generated.
+2025-03-31 14:20:18,587 [INFO] Updated last_synced_at = 2025-03-06 03:50:51 for rows where MODIFIEDDATETIME BETWEEN 2025-02-01 16:06:28 AND 2025-03-06 03:50:51 in table prod_source.custinvoicejour.
+2025-03-31 14:20:18,609 [INFO] Completed Load in 102.44 seconds, memory used: -1.92 MB, CPU used: 11.00%
+2025-03-31 14:20:19,621 [INFO] ETL Pipeline completed for job: daily_SRC_custinvoicejour in 117.71 seconds, total memory used: 800.85 MB, total CPU used: 14.65%

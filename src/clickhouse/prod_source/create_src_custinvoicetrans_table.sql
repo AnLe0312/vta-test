@@ -104,6 +104,7 @@ CREATE TABLE IF NOT EXISTS prod_source.custinvoicetrans (
    VTVCONTRACTDISCPERCENT	Float64,
    VTVDISCOUNTRATIO	Float64,
    VTVTRADEDISCOUNTAMOUNT	Float64,
+   last_synced_at               DateTime,
    updated_at      DateTime DEFAULT now(),
    PRIMARY KEY (RECID)
 )

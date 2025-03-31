@@ -100,7 +100,7 @@ def insert_in_batches(data, client, database_name, table, col_names_str, batch_s
 
 
 # Generate SQL query for INSERT or DELETE
-def generate_query(query_type, database_name, table, condition=None, data=None, interval='15 DAY', logger=None):
+def generate_query(query_type, database_name, table, condition=None, data=None, logger=None):
 
     client = get_clickhouse_connection(database_name)
 

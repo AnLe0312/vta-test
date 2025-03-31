@@ -12,13 +12,13 @@ from modules.db_connector import get_clickhouse_connection
 from datetime import datetime
 
 
-def fetch_table_updated_at(database_name, table_name):
+def fetch_table_last_synced_at(database_name, table_name):
     """
-    Fetches the 'updated_at' timestamp from the given table in ClickHouse.
-    You may need to adjust this query depending on how the 'updated_at' is stored.
+    Fetches the 'last_synced_at' timestamp from the given table in ClickHouse.
+    You may need to adjust this query depending on how the 'last_synced_at' is stored.
     """
     query = f"""
-    SELECT MAX(updated_at)
+    SELECT MAX(last_synced_at)
     FROM {database_name}.{table_name}
     """
     conn = get_clickhouse_connection(database_name)
@@ -104,7 +104,7 @@ def transform_dataframe_to_schema(df, schema, logger=None):
 
             if logger:
                 logger.info(f"Added missing column '{col}' with default or null values.")
-            continue  # Không cần transform thêm
+            continue  
 
         # Skip the column if it was initialized in new_columns (since it doesn't exist in df)
         if col not in df.columns:
@@ -188,3 +188,35 @@ def prepare_sql_data(df):
         raise ValueError("No rows were successfully formatted for insertion.")
 
     return ',\n'.join(sql_rows)
+
+
+def get_max_modified_datetime_from_schema(database_name, table_name):
+    """Get MAX(MODIFIEDDATETIME) from ClickHouse table to track ETL status."""
+    query = f"""
+        SELECT MAX(MODIFIEDDATETIME)
+        FROM {database_name}.{table_name}
+    """
+    conn = get_clickhouse_connection(database_name)
+    result = conn.query(query).result_rows
+    return result[0][0] if result else None
+
+
+def update_last_synced_at_in_schema(database_name, table_name, new_last_synced_at, mod_min, mod_max, logger=None):
+    """Update the last_synced_at column in the ClickHouse table."""
+    if not new_last_synced_at:
+        logger.warning("No new last_synced_at value to update.")
+        return
+
+    query = f"""
+        ALTER TABLE {database_name}.{table_name}
+        UPDATE last_synced_at = %(new_modified)s
+        WHERE MODIFIEDDATETIME BETWEEN %(mod_min)s AND %(mod_max)s
+    """
+    params = {  'new_modified': new_last_synced_at, 
+                'mod_min': mod_min,
+                'mod_max': mod_max }
+
+    conn = get_clickhouse_connection(database_name)
+    conn.command(query, parameters=params)
+    
+    logger.info(f"Updated last_synced_at = {new_last_synced_at} for rows where MODIFIEDDATETIME BETWEEN {mod_min} AND {mod_max} in table {database_name}.{table_name}.")

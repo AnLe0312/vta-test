@@ -171,6 +171,7 @@ CREATE TABLE IF NOT EXISTS prod_source.salesline (
     VTASUBTOTALMKP Float64,
     VTADOCUMENTID String,
     VTAPOSHIPMENTID String,
+    last_synced_at        DateTime,
     updated_at DateTime DEFAULT now(),
     PRIMARY KEY (RECID)
 )

@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS prod_source.custinvoicejour (
     VASVATDISCCOUNT             Float64,
     VTA_SALESTYPE               UInt8,
     YVS_EINVOICEFROM            Int64,
+    last_synced_at              DateTime,
     updated_at                  DateTime DEFAULT now(),
     PRIMARY KEY (RECID)
 )

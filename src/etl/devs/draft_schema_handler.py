@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import math
-import logging
 import os
 import sys 
 
@@ -13,13 +12,13 @@ from modules.db_connector import get_clickhouse_connection
 from datetime import datetime
 
 
-def fetch_table_updated_at(database_name, table_name):
+def fetch_table_last_modified(database_name, table_name):
     """
-    Fetches the 'updated_at' timestamp from the given table in ClickHouse.
-    You may need to adjust this query depending on how the 'updated_at' is stored.
+    Fetches the 'last_modified' timestamp from the given table in ClickHouse.
+    You may need to adjust this query depending on how the 'last_modified' is stored.
     """
     query = f"""
-    SELECT MAX(updated_at)
+    SELECT MAX(last_modified)
     FROM {database_name}.{table_name}
     """
     conn = get_clickhouse_connection(database_name)
@@ -47,17 +46,26 @@ def fetch_table_schema(database_name, table_name):
 
 
 # Transform DataFrame columns to match ClickHouse schema
-def transform_dataframe_to_schema(df, schema):
+def transform_dataframe_to_schema(df, schema, logger=None):
     # Handle Date and DateTime columns to replace years in the 1900s (19xx) with NaT
+    missing_columns = []
+
     for col in df.columns:
         if col not in schema:
-            logging.warning(f"Column '{col}' is missing from the ClickHouse schema and will be skipped.")
+            logger.warning(f"Column '{col}' is missing from the ClickHouse schema and will be skipped.")
+            missing_columns.append(col)
             continue  # Skip the column if it's missing from the schema
         # If the column is Date or DateTime, replace dates with years in the 1900s (19xx) with None
         if df[col].dtype in ["datetime64[ns]", "datetime64[ns, UTC]"]:
             mask = df[col].dt.year < 2000
             df[col] = df[col].astype("object")  # Ensure object type for mixed values
             df.loc[mask, col] = None
+
+    # Remove missing columns from df
+    if missing_columns:
+        df = df.drop(columns=missing_columns)
+        if logger:
+            logger.info(f"Dropped {len(missing_columns)} column(s) not in schema: {missing_columns}")
 
     new_columns = {}
     # Transform DataFrame columns to match ClickHouse schema
@@ -94,6 +102,10 @@ def transform_dataframe_to_schema(df, schema):
                 # For other missing columns, assign NaN if nullable or 0 if not nullable
                 new_columns[col] = [np.nan if nullable else 0] * len(df)
 
+            if logger:
+                logger.info(f"Added missing column '{col}' with default or null values.")
+            continue  
+
         # Skip the column if it was initialized in new_columns (since it doesn't exist in df)
         if col not in df.columns:
             continue
@@ -120,7 +132,15 @@ def transform_dataframe_to_schema(df, schema):
         if nullable:
             df[col] = df[col].where(pd.notnull(df[col]), None)
 
-    df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+    if new_columns:
+        df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+
+    # Ensure the column order matches the schema
+    ordered_columns = [col for col in schema.keys() if col in df.columns]
+    df = df[ordered_columns]
+
+    if logger:
+        logger.info(f"Final DataFrame shape after schema transformation: {df.shape}")
 
     return df
 
@@ -168,3 +188,33 @@ def prepare_sql_data(df):
         raise ValueError("No rows were successfully formatted for insertion.")
 
     return ',\n'.join(sql_rows)
+
+
+def get_max_modified_datetime_from_schema(database_name, table_name):
+    """Get MAX(MODIFIEDDATETIME) from ClickHouse table to track ETL status."""
+    query = f"""
+        SELECT MAX(MODIFIEDDATETIME)
+        FROM {database_name}.{table_name}
+    """
+    conn = get_clickhouse_connection(database_name)
+    result = conn.query(query).result_rows
+    return result[0][0] if result else None
+
+
+def update_last_modified_in_schema(database_name, table_name, new_last_modified, logger=None):
+    """Update the last_modified column in the ClickHouse table."""
+    if not new_last_modified:
+        logger.warning("No new last_modified value to update.")
+        return
+
+    query = f"""
+        ALTER TABLE {database_name}.{table_name}
+        UPDATE last_modified = %(new_modified)s
+        WHERE 1
+    """
+    params = {'new_modified': new_last_modified}
+
+    conn = get_clickhouse_connection(database_name)
+    conn.command(query, parameters=params)
+    
+    logger.info(f"Updated last_modified = {new_last_modified} in table {database_name}.{table_name}.")

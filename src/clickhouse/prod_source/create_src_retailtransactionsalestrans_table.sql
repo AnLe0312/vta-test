@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS prod_source.retailtransactionsalestrans (
    RECID	UInt64,
    VRTGIFTCARDNUMBER	String,
    STAFF	String,
+   last_synced_at         DateTime,
    updated_at    DateTime DEFAULT now(),
    PRIMARY KEY (RECID)
 )
